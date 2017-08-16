@@ -8,19 +8,47 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-16 00:57+0200\n"
+"POT-Creation-Date: 2017-08-16 16:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/MainWindow.vala:36
+#: ../src/Widgets/MatchItem.vala:36
+msgid "Match %d"
+msgstr ""
+
+#: ../src/MainWindow.vala:61
 msgid "Regex Tester"
 msgstr ""
 
-#: ../src/MainWindow.vala:50
-msgid "Put your RegEx here…"
+#: ../src/MainWindow.vala:77
+msgid "Regular expression"
+msgstr ""
+
+#: ../src/MainWindow.vala:111
+msgid "Hide Sidebar"
+msgstr ""
+
+#: ../src/MainWindow.vala:114
+msgid "Show Sidebar"
+msgstr ""
+
+#: ../src/MainWindow.vala:124
+msgid "Multiline"
+msgstr ""
+
+#: ../src/MainWindow.vala:133
+msgid "Regex Style"
+msgstr ""
+
+#: ../src/MainWindow.vala:141
+msgid "Choose a Regex Style"
+msgstr ""
+
+#: ../src/MainWindow.vala:145
+msgid "Match Information"
 msgstr ""
