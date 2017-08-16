@@ -41,14 +41,25 @@ namespace RegexTester {
 
         Gtk.ComboBoxText style_chooser;
 
+        Settings settings;
+
         public MainWindow () {
-            this.width_request = 720;
-            this.height_request = 640;
+            settings = Settings.get_default ();
+            this.width_request = settings.window_width;
+            this.height_request = settings.window_height;
 
             this.match.connect ((count, text, start, end) => {
                 this.matches.add (new Widgets.MatchItem (count, text, start, end));
                 this.matches.show_all ();
                 debug ("%s, %d - %d", text, start, end);
+            });
+
+            this.destroy.connect (() => {
+                settings.window_width = this.width_request;
+                settings.window_height = this.height_request;
+                settings.sidebar_visible = this.sidebar.visible;
+                settings.multiline = this.multiline.active;
+                settings.regex_style = this.style_chooser.active_id;
             });
 
             build_ui ();
@@ -128,6 +139,7 @@ namespace RegexTester {
 
             multiline = new Gtk.Switch ();
             multiline.halign = Gtk.Align.START;
+            multiline.active = settings.multiline;
             multiline.notify["active"].connect (check_regex);
             options.attach (multiline, 1, 0);
 
@@ -137,8 +149,8 @@ namespace RegexTester {
 
             style_chooser = new Gtk.ComboBoxText ();
             style_chooser.append ("Javascript", "Javascript");
-            style_chooser.append ("Pearl", "Pearl");
-            style_chooser.active = 1;
+            style_chooser.append ("Perl", "Perl");
+            style_chooser.active_id = settings.regex_style;
             style_chooser.tooltip_text = _("Choose a Regex Style");
             style_chooser.changed.connect (check_regex);
             options.attach (style_chooser, 1, 1);
@@ -173,6 +185,7 @@ namespace RegexTester {
             this.show_all ();
 
             result.grab_focus ();
+            sidebar.visible = settings.sidebar_visible;
         }
 
         private void check_regex () {

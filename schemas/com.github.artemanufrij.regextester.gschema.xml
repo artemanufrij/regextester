@@ -1,0 +1,29 @@
+<schemalist>
+	<schema path="/com/github/artemanufrij/regextester/" id="com.github.artemanufrij.regextester" gettext-domain="com.github.artemanufrij.regextester">
+		<key name="window-width" type="i">
+			<default>720</default>
+			<summary>The saved width of the window.</summary>
+			<description>The saved width of the window.</description>
+		</key>
+		<key name="window-height" type="i">
+			<default>640</default>
+			<summary>The saved height of the window.</summary>
+			<description>The saved height of the window.</description>
+		</key>
+		<key name="sidebar-visible" type="b">
+		    <default>true</default>
+			<summary>Sidebar visibility.</summary>
+			<description>Sidebar visibility.</description>
+		</key>
+		<key name="multiline" type="b">
+		    <default>true</default>
+			<summary>Set Multiline flagSet Multiline flag.</summary>
+			<description>Set Multiline flagSet Multiline flag.</description>
+		</key>
+		<key name="regex-style" type="s">
+		    <default>"Perl"</default>
+			<summary>Regex Style.</summary>
+			<description>Regex Style.</description>
+		</key>
+	</schema>
+</schemalist>
