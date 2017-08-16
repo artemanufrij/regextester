@@ -38,7 +38,8 @@ namespace RegexTester {
         Gtk.ScrolledWindow result_scroll;
         Gtk.HeaderBar headerbar;
         Gtk.Switch multiline;
-        Gtk.Switch js_compat;
+
+        Gtk.ComboBoxText style_chooser;
 
         public MainWindow () {
             this.width_request = 720;
@@ -70,15 +71,26 @@ namespace RegexTester {
             var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
 
             var content = new Gtk.Grid ();
-            content.margin = 12;
-            content.row_spacing = 12;
 
             entry = new Gtk.Entry ();
-            entry.placeholder_text = _("Put your RegEx here…");
+            entry.margin = 12;
+            entry.placeholder_text = _("Regular expression");
             entry.changed.connect (check_regex);
             content.attach (entry, 0, 0);
 
+            var result_label = new Gtk.Label ("<b>%s</b>".printf("Test String"));
+            result_label.use_markup = true;
+            result_label.margin = 6;
+            result_label.margin_left = 12;
+            result_label.halign = Gtk.Align.START;
+            content.attach (result_label, 0, 1);
+
+            var separator_result = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+            separator_result.hexpand = true;
+            content.attach (separator_result, 0, 2);
+
             result = new Gtk.TextView ();
+            result.top_margin = result.left_margin = result.bottom_margin = result.right_margin = 12;
             result.wrap_mode = Gtk.WrapMode.WORD;
 
             result.buffer.create_tag ("marked_first", "background", "#64baff");
@@ -89,15 +101,17 @@ namespace RegexTester {
             result_scroll.expand = true;
             result_scroll.add (result);
 
-            content.attach (result_scroll, 0, 1);
+            content.attach (result_scroll, 0, 3);
 
             sidebar = new Gtk.Grid ();
             sidebar.width_request = 120;
             sidebar.notify["visible"].connect (() => {
                 if (sidebar.visible) {
                     show_sidebar.image = new Gtk.Image.from_icon_name ("pane-hide-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
+                    show_sidebar.tooltip_text = _("Hide Sidebar");
                 } else {
                     show_sidebar.image = new Gtk.Image.from_icon_name ("pane-show-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
+                    show_sidebar.tooltip_text = _("Show Sidebar");
                 }
             });
 
@@ -112,23 +126,38 @@ namespace RegexTester {
             options.attach (multiline_title, 0, 0);
 
             multiline = new Gtk.Switch ();
+            multiline.halign = Gtk.Align.START;
             multiline.notify["active"].connect (check_regex);
             options.attach (multiline, 1, 0);
 
-            var js_compat_title = new Gtk.Label (_("Javascript compatible"));
+            var js_compat_title = new Gtk.Label (_("Regex Style"));
             js_compat_title.halign = Gtk.Align.END;
             options.attach (js_compat_title, 0, 1);
 
-            js_compat = new Gtk.Switch ();
-            js_compat.notify["active"].connect (check_regex);
-            options.attach (js_compat, 1, 1);
+            style_chooser = new Gtk.ComboBoxText ();
+            style_chooser.append ("Javascript", "Javascript");
+            style_chooser.append ("Pearl", "Pearl");
+            style_chooser.active = 1;
+            style_chooser.tooltip_text = _("Choose a Regex Style");
+            style_chooser.changed.connect (check_regex);
+            options.attach (style_chooser, 1, 1);
+
+            var matches_label = new Gtk.Label ("<b>%s</b>".printf(_("Match Information")));
+            matches_label.halign = Gtk.Align.START;
+            matches_label.use_markup = true;
+            matches_label.margin = 6;
+            sidebar.attach (matches_label, 0, 2, 2, 1);
+
+            var separator_matches = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+            separator_matches.hexpand = true;
+            sidebar.attach (separator_matches, 0, 3, 2, 1);
 
             var scroller = new Gtk.ScrolledWindow (null, null);
 
             matches = new Gtk.ListBox ();
             matches.expand = true;
             scroller.add (matches);
-            sidebar.attach (scroller, 0, 2, 2, 1);
+            sidebar.attach (scroller, 0, 4, 2, 1);
 
             paned.pack1 (content, true, false);
             paned.pack2 (sidebar, false, false);
@@ -165,7 +194,7 @@ namespace RegexTester {
                 if (multiline.active) {
                     flags |= RegexCompileFlags.MULTILINE;
                 }
-                if (js_compat.active) {
+                if (style_chooser.active_id == "Javascript") {
                     flags |= RegexCompileFlags.JAVASCRIPT_COMPAT;
                 }
 

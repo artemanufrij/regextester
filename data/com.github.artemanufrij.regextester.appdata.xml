@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Artem Anufrij <artem.anufrij@live.de> -->
+<component type="desktop">
+    <id>com.github.artemanufrij.regextester.desktop</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>GPL-3.0+</project_license>
+    <name>Regex Tester</name>
+    <summary>A simple app for testing regular expressions</summary>
+    <description>
+        <p>A regular expression is a special text string that describes a search pattern.</p>
+        <p>Regex Tester shows all matches of search pattern in a string.</p>
+    </description>
+    <categories>
+        <category>Utility</category>
+    </categories>
+    <custom>
+        <value key="x-appcenter-color-primary">#9bdb4d</value>
+        <value key="x-appcenter-color-primary-text">rgb(0,0,0)</value>
+        <value key="x-appcenter-suggested-price">1</value>
+    </custom>
+    <developer_name>Artem Anufrij</developer_name>
+    <url type="homepage">https://github.com/artemanufrij/regextester</url>
+    <url type="bugtracker">https://github.com/artemanufrij/regextester/issues</url>
+    <url type="help">https://github.com/artemanufrij/regextester/issues</url>
+    <update_contact>artem.anufrij@live.de</update_contact>
+    <screenshots>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/artemanufrij/regextester/master/Screenshot.png</image>
+        </screenshot>
+    </screenshots>
+</component>
