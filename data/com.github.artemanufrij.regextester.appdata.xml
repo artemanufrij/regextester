@@ -11,7 +11,7 @@
         <p>Regex Tester shows all matches of search pattern in a string.</p>
     </description>
     <categories>
-        <category>Utility</category>
+        <category>Development</category>
     </categories>
     <custom>
         <value key="x-appcenter-color-primary">#9bdb4d</value>

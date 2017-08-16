@@ -7,5 +7,5 @@ Exec=com.github.artemanufrij.regextester %U
 Icon=artemanufrij.regextester
 Terminal=false
 Type=Application
-Categories=Utility;GNOME;GTK;
+Categories=Development;GNOME;GTK;
 X-GNOME-Gettext-Domain=com.github.artemanufrij.regextester
