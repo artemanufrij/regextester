@@ -31,20 +31,37 @@ namespace RegexTester {
 
         Gtk.Entry entry;
         Gtk.TextView result;
+        Gtk.ScrolledWindow result_scroll;
+        Gtk.HeaderBar headerbar;
+        Gtk.CheckButton multiline;
 
         public MainWindow () {
-            this.title = _("Regex Tester");
-            this.resizable = false;
-
+            this.width_request = 720;
+            this.height_request = 640;
             build_ui ();
 
             present ();
         }
 
         private void build_ui () {
+            headerbar = new Gtk.HeaderBar ();
+            headerbar.title = _("Regex Tester");
+            headerbar.show_close_button = true;
+
+            this.set_titlebar (headerbar);
+
             var content = new Gtk.Grid ();
             content.margin = 12;
             content.row_spacing = 12;
+
+            multiline = new Gtk.CheckButton.with_label (_("Multiline"));
+            multiline.toggled.connect (check_regex);
+
+            var options = new Gtk.Grid ();
+            options.column_homogeneous = true;
+            options.attach (multiline, 0, 0);
+            options.halign = Gtk.Align.CENTER;
+            content.attach (options, 0, 1);
 
             entry = new Gtk.Entry ();
             entry.placeholder_text = _("Put your RegEx here…");
@@ -53,13 +70,16 @@ namespace RegexTester {
 
             result = new Gtk.TextView ();
             result.wrap_mode = Gtk.WrapMode.WORD;
-            result.width_request = 640;
-            result.height_request = 480;
+
             result.buffer.create_tag ("marked_first", "background", "#64baff");
             result.buffer.create_tag ("marked_second", "background", "#9bdb4d");
             result.buffer.changed.connect (check_regex);
 
-            content.attach (result, 0, 1);
+            result_scroll = new Gtk.ScrolledWindow (null, null);
+            result_scroll.expand = true;
+            result_scroll.add (result);
+
+            content.attach (result_scroll, 0, 2);
             this.add (content);
             this.show_all ();
 
@@ -82,18 +102,26 @@ namespace RegexTester {
             }
 
             try {
-                var reg = new Regex (regex);
+                RegexCompileFlags flags = RegexCompileFlags.JAVASCRIPT_COMPAT ;
+                if (multiline.active) {
+                    flags |= RegexCompileFlags.MULTILINE;
+                }
+
+                var reg = new Regex (regex, flags);
                 MatchInfo mi;
                 bool mod = true;
 
-                if (reg.match(text, 0, out mi)) {
+                if (reg.match(text, 0 , out mi)) {
                     int pos_start = 0;
                     int pos_end = 0;
                     do{
                         mi.fetch_pos (0, out pos_start, out pos_end);
-                        s.set_offset (pos_start);
-                        e.set_offset (pos_end);
-                        debug ("%s, %d, %d", mi.fetch (0), pos_start, pos_end);
+                        s.set_offset (pos_start - shift_unichar (text, pos_start));
+                        e.set_offset (pos_end - shift_unichar (text, pos_end));
+
+                        string str = mi.fetch (0);
+
+                        debug ("'%s' len (%d), %d, %d", str, str.length, pos_start, pos_end);
 
                         if (mod) {
                             buffer.apply_tag_by_name ("marked_first", s, e);
@@ -119,6 +147,24 @@ namespace RegexTester {
 
             buffer.remove_tag_by_name ("marked_first", s, e);
             buffer.remove_tag_by_name ("marked_second", s, e);
+        }
+
+        private int shift_unichar (string text, int pos){
+            // FIXME: we need a better method. unichars have a length of 2 per character
+            unichar [] black_list = {'«', '»'};
+            int return_value = 0;
+
+            foreach (var c in black_list) {
+                int cur_pos = -1;
+                do {
+                    cur_pos = text.index_of_char (c, cur_pos + 1);
+                    debug ("%d", cur_pos);
+                    if (cur_pos > -1 && cur_pos < pos){
+                        return_value += 1;
+                    }
+                } while (cur_pos > -1 && cur_pos < pos);
+            }
+            return return_value;
         }
     }
 }
