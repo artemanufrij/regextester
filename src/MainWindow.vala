@@ -29,11 +29,13 @@ namespace RegexTester {
 
     public class MainWindow : Gtk.Window {
 
+        Gtk.Grid sidebar;
         Gtk.Entry entry;
         Gtk.TextView result;
         Gtk.ScrolledWindow result_scroll;
         Gtk.HeaderBar headerbar;
-        Gtk.CheckButton multiline;
+        Gtk.Switch multiline;
+        Gtk.Switch js_compat;
 
         public MainWindow () {
             this.width_request = 720;
@@ -48,20 +50,18 @@ namespace RegexTester {
             headerbar.title = _("Regex Tester");
             headerbar.show_close_button = true;
 
+            var show_sidebar = new Gtk.Button.from_icon_name ("pane-show-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
+            show_sidebar.clicked.connect (() => {
+                sidebar.visible = !sidebar.visible;
+            });
+            headerbar.pack_end (show_sidebar);
             this.set_titlebar (headerbar);
+
+            var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
 
             var content = new Gtk.Grid ();
             content.margin = 12;
             content.row_spacing = 12;
-
-            multiline = new Gtk.CheckButton.with_label (_("Multiline"));
-            multiline.toggled.connect (check_regex);
-
-            var options = new Gtk.Grid ();
-            options.column_homogeneous = true;
-            options.attach (multiline, 0, 0);
-            options.halign = Gtk.Align.CENTER;
-            content.attach (options, 0, 1);
 
             entry = new Gtk.Entry ();
             entry.placeholder_text = _("Put your RegEx here…");
@@ -79,8 +79,43 @@ namespace RegexTester {
             result_scroll.expand = true;
             result_scroll.add (result);
 
-            content.attach (result_scroll, 0, 2);
-            this.add (content);
+            content.attach (result_scroll, 0, 1);
+
+            sidebar = new Gtk.Grid ();
+            sidebar.notify["visible"].connect (() => {
+                if (sidebar.visible) {
+                    show_sidebar.image = new Gtk.Image.from_icon_name ("pane-hide-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
+                } else {
+                    show_sidebar.image = new Gtk.Image.from_icon_name ("pane-show-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
+                }
+            });
+
+            var options = new Gtk.Grid ();
+            options.margin = 12;
+            options.column_spacing = 12;
+            options.row_spacing = 12;
+            sidebar.attach (options, 0, 0);
+
+            var multiline_title = new Gtk.Label (_("Multiline"));
+            multiline_title.halign = Gtk.Align.END;
+            options.attach (multiline_title, 0, 0);
+
+            multiline = new Gtk.Switch ();
+            multiline.notify["active"].connect (check_regex);
+            options.attach (multiline, 1, 0);
+            
+            var js_compat_title = new Gtk.Label (_("Javascript compatible"));
+            js_compat_title.halign = Gtk.Align.END;
+            options.attach (js_compat_title, 0, 1);
+            
+            js_compat = new Gtk.Switch ();
+            js_compat.notify["active"].connect (check_regex);
+            options.attach (js_compat, 1, 1);
+
+            paned.pack1 (content, false, true);
+            paned.pack2 (sidebar, false, true);
+
+            this.add (paned);
             this.show_all ();
 
             result.grab_focus ();
@@ -105,6 +140,9 @@ namespace RegexTester {
                 RegexCompileFlags flags = RegexCompileFlags.JAVASCRIPT_COMPAT ;
                 if (multiline.active) {
                     flags |= RegexCompileFlags.MULTILINE;
+                }
+                if (js_compat.active) {
+                    flags |= RegexCompileFlags.JAVASCRIPT_COMPAT;
                 }
 
                 var reg = new Regex (regex, flags);
@@ -151,7 +189,7 @@ namespace RegexTester {
 
         private int shift_unichar (string text, int pos){
             // FIXME: we need a better method. unichars have a length of 2 per character
-            unichar [] black_list = {'«', '»'};
+            unichar [] black_list = {'«', '»', 'ß', 'ä', 'Ä', 'ö', 'Ö', 'ü', 'Ü'};
             int return_value = 0;
 
             foreach (var c in black_list) {
