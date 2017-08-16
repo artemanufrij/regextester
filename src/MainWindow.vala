@@ -229,6 +229,9 @@ namespace RegexTester {
                     int pos_end = 0;
                     do {
                         mi.fetch_pos (0, out pos_start, out pos_end);
+                        if (pos_start == pos_end) {
+                            continue;
+                        }
                         s.set_offset (pos_start - shift_unichar (text, pos_start));
                         e.set_offset (pos_end - shift_unichar (text, pos_end));
 
