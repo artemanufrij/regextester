@@ -29,7 +29,10 @@ namespace RegexTester {
 
     public class MainWindow : Gtk.Window {
 
+        public signal void match (int count, string text, int start, int end);
+
         Gtk.Grid sidebar;
+        Gtk.ListBox matches;
         Gtk.Entry entry;
         Gtk.TextView result;
         Gtk.ScrolledWindow result_scroll;
@@ -40,6 +43,13 @@ namespace RegexTester {
         public MainWindow () {
             this.width_request = 720;
             this.height_request = 640;
+
+            this.match.connect ((count, text, start, end) => {
+                this.matches.add (new Widgets.MatchItem (count, text, start, end));
+                this.matches.show_all ();
+                debug ("%s, %d - %d", text, start, end);
+            });
+
             build_ui ();
 
             present ();
@@ -82,6 +92,7 @@ namespace RegexTester {
             content.attach (result_scroll, 0, 1);
 
             sidebar = new Gtk.Grid ();
+            sidebar.width_request = 120;
             sidebar.notify["visible"].connect (() => {
                 if (sidebar.visible) {
                     show_sidebar.image = new Gtk.Image.from_icon_name ("pane-hide-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
@@ -103,17 +114,24 @@ namespace RegexTester {
             multiline = new Gtk.Switch ();
             multiline.notify["active"].connect (check_regex);
             options.attach (multiline, 1, 0);
-            
+
             var js_compat_title = new Gtk.Label (_("Javascript compatible"));
             js_compat_title.halign = Gtk.Align.END;
             options.attach (js_compat_title, 0, 1);
-            
+
             js_compat = new Gtk.Switch ();
             js_compat.notify["active"].connect (check_regex);
             options.attach (js_compat, 1, 1);
 
-            paned.pack1 (content, false, true);
-            paned.pack2 (sidebar, false, true);
+            var scroller = new Gtk.ScrolledWindow (null, null);
+
+            matches = new Gtk.ListBox ();
+            matches.expand = true;
+            scroller.add (matches);
+            sidebar.attach (scroller, 0, 2, 2, 1);
+
+            paned.pack1 (content, true, false);
+            paned.pack2 (sidebar, false, false);
 
             this.add (paned);
             this.show_all ();
@@ -123,9 +141,15 @@ namespace RegexTester {
 
         private void check_regex () {
             var regex = this.entry.text;
+            entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, null);
 
             var buffer = result.buffer;
             var text = buffer.text;
+
+            // FIXME: We need a faster method…?
+            foreach (var child in matches.get_children ()) {
+                matches.remove (child);
+            }
 
             Gtk.TextIter s, e;
             buffer.get_bounds (out s, out e);
@@ -147,19 +171,21 @@ namespace RegexTester {
 
                 var reg = new Regex (regex, flags);
                 MatchInfo mi;
-                bool mod = true;
 
                 if (reg.match(text, 0 , out mi)) {
+                    bool mod = true;
+                    int count = 1;
+
                     int pos_start = 0;
                     int pos_end = 0;
-                    do{
+                    do {
                         mi.fetch_pos (0, out pos_start, out pos_end);
                         s.set_offset (pos_start - shift_unichar (text, pos_start));
                         e.set_offset (pos_end - shift_unichar (text, pos_end));
 
                         string str = mi.fetch (0);
 
-                        debug ("'%s' len (%d), %d, %d", str, str.length, pos_start, pos_end);
+                        match (count, str, pos_start, pos_end);
 
                         if (mod) {
                             buffer.apply_tag_by_name ("marked_first", s, e);
@@ -167,11 +193,14 @@ namespace RegexTester {
                             buffer.apply_tag_by_name ("marked_second", s, e);
                         }
                         mod = !mod;
+                        count ++;
 
                     } while (mi.next ());
                 }
             } catch (Error e) {
                 warning (e.message);
+                entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "process-error");
+                entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, e.message);
             }
         }
 
@@ -188,7 +217,7 @@ namespace RegexTester {
         }
 
         private int shift_unichar (string text, int pos){
-            // FIXME: we need a better method. unichars have a length of 2 per character
+            // FIXME: we need a better method for counting unichars. unichars have a length of 2 per character
             unichar [] black_list = {'«', '»', 'ß', 'ä', 'Ä', 'ö', 'Ö', 'ü', 'Ü'};
             int return_value = 0;
 
@@ -196,7 +225,6 @@ namespace RegexTester {
                 int cur_pos = -1;
                 do {
                     cur_pos = text.index_of_char (c, cur_pos + 1);
-                    debug ("%d", cur_pos);
                     if (cur_pos > -1 && cur_pos < pos){
                         return_value += 1;
                     }
