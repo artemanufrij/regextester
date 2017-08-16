@@ -28,23 +28,28 @@
 namespace RegexTester.Widgets {
     public class MatchItem : Gtk.ListBoxRow {
 
+        public int start { get; set; }
+        public int end { get; set; }
+
         public MatchItem (int count, string text, int start, int end) {
+            this.start = start;
+            this.end = end;
             var content = new Gtk.Grid ();
             content.margin = 6;
             content.row_spacing = 6;
-            
+
             var match_count = new Gtk.Label (_("Match %d").printf (count));
             match_count.hexpand = true;
             match_count.halign = Gtk.Align.START;
-            
+
             var match_text = new Gtk.Label (text);
             match_text.tooltip_text = text;
             match_text.ellipsize = Pango.EllipsizeMode.MIDDLE;
             match_text.hexpand = true;
             match_text.halign = Gtk.Align.START;
-            
+
             string pkgdir = Constants.PKGDATADIR;
-            
+
             Gtk.Image icon;
             if (count % 2 == 0) {
                 icon = new Gtk.Image.from_file(pkgdir + "/icons/regex_match_second.svg");
@@ -54,15 +59,11 @@ namespace RegexTester.Widgets {
             var pos = new Gtk.Label (("<span font_size=\"small\">%d - %d</span>").printf (start, end));
             pos.use_markup = true;
             pos.halign = Gtk.Align.END;
-            
-           // var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
-           // separator.margin_top = 6;
-            
+
             content.attach (icon, 0, 0);
             content.attach (match_count, 1, 0);
             content.attach (pos, 2, 0);
             content.attach (match_text, 0, 1, 3, 1);
-            //content.attach (separator, 0, 2, 3, 1);
             this.add (content);
         }
     }

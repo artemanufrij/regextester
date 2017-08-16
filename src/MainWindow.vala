@@ -95,6 +95,7 @@ namespace RegexTester {
 
             result.buffer.create_tag ("marked_first", "background", "#64baff");
             result.buffer.create_tag ("marked_second", "background", "#9bdb4d");
+            result.buffer.create_tag ("marked_highlight", "background", "#ffa154");
             result.buffer.changed.connect (check_regex);
 
             result_scroll = new Gtk.ScrolledWindow (null, null);
@@ -156,6 +157,12 @@ namespace RegexTester {
 
             matches = new Gtk.ListBox ();
             matches.expand = true;
+            matches.selected_rows_changed.connect (() => {
+                var item = this.matches.get_selected_row () as Widgets.MatchItem;
+                if (item != null) {
+                    this.set_selected_match (item.start, item.end);
+                }
+            });
             scroller.add (matches);
             sidebar.attach (scroller, 0, 4, 2, 1);
 
@@ -233,6 +240,22 @@ namespace RegexTester {
             }
         }
 
+        private void set_selected_match (int start, int end) {
+            var text = this.result.buffer.text;
+            Gtk.TextIter s, e;
+            this.result.buffer.get_bounds (out s, out e);
+
+            s.set_offset (0);
+            e.set_offset (text.length);
+
+            this.result.buffer.remove_tag_by_name ("marked_highlight", s, e);
+
+            s.set_offset (start);
+            e.set_offset (end);
+            this.result.buffer.apply_tag_by_name ("marked_highlight", s, e);
+            this.result.scroll_to_iter (s, 0, false, 0, 0);
+        }
+
         private void reset_tags (Gtk.TextBuffer buffer) {
             var text = buffer.text;
             Gtk.TextIter s, e;
@@ -241,6 +264,7 @@ namespace RegexTester {
             s.set_offset (0);
             e.set_offset (text.length);
 
+            buffer.remove_tag_by_name ("marked_highlight", s, e);
             buffer.remove_tag_by_name ("marked_first", s, e);
             buffer.remove_tag_by_name ("marked_second", s, e);
         }
