@@ -31,6 +31,8 @@ namespace RegexTester.Widgets {
         public int start { get; set; }
         public int end { get; set; }
 
+        Gtk.Menu menu;
+
         public MatchItem (int count, string text, int start, int end) {
             this.start = start;
             this.end = end;
@@ -48,6 +50,10 @@ namespace RegexTester.Widgets {
             match_text.hexpand = true;
             match_text.halign = Gtk.Align.START;
 
+            var event_box = new Gtk.EventBox ();
+            event_box.button_press_event.connect (show_context_menu);
+            event_box.add (match_text);
+
             string pkgdir = Constants.PKGDATADIR;
 
             Gtk.Image icon;
@@ -60,11 +66,29 @@ namespace RegexTester.Widgets {
             pos.use_markup = true;
             pos.halign = Gtk.Align.END;
 
+            menu = new Gtk.Menu ();
+
+            var menu_copy = new Gtk.MenuItem.with_label (_("Copy match…"));
+            menu_copy.activate.connect (() => {
+                Gtk.Clipboard.get_default (Gdk.Display.get_default ()).set_text (text, -1);
+            });
+
+            menu.append (menu_copy);
+            menu.show_all ();
+
             content.attach (icon, 0, 0);
             content.attach (match_count, 1, 0);
             content.attach (pos, 2, 0);
-            content.attach (match_text, 0, 1, 3, 1);
+            content.attach (event_box, 0, 1, 3, 1);
             this.add (content);
+        }
+
+        private bool show_context_menu (Gtk.Widget sender, Gdk.EventButton evt) {
+            if (evt.type == Gdk.EventType.BUTTON_PRESS && evt.button == 3) {
+                menu.popup (null, null, null, evt.button, evt.time);
+                return true;
+            }
+            return false;
         }
     }
 }
