@@ -3,3 +3,39 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: ../src/Widgets/MatchItem.vala:36
+msgid "Match %d"
+msgstr "Coincidencia %d"
+
+#: ../src/MainWindow.vala:61
+msgid "Regex Tester"
+msgstr "Regex Tester"
+
+#: ../src/MainWindow.vala:77
+msgid "Regular expression"
+msgstr "Expresiones regulares"
+
+#: ../src/MainWindow.vala:111
+msgid "Hide Sidebar"
+msgstr "Ocultar barra lateral"
+
+#: ../src/MainWindow.vala:114
+msgid "Show Sidebar"
+msgstr "Mostrar barra lateral"
+
+#: ../src/MainWindow.vala:124
+msgid "Multiline"
+msgstr "Multilínea"
+
+#: ../src/MainWindow.vala:133
+msgid "Regex Style"
+msgstr "Estilo de expresiones regulares"
+
+#: ../src/MainWindow.vala:141
+msgid "Choose a Regex Style"
+msgstr "Elegir estilo de expresiones regulares"
+
+#: ../src/MainWindow.vala:145
+msgid "Match Information"
+msgstr "Coincidencias encontradas"
