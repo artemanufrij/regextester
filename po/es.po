@@ -34,7 +34,7 @@ msgstr "Estilo de expresiones regulares"
 
 #: ../src/MainWindow.vala:141
 msgid "Choose a Regex Style"
-msgstr "Elegir estilo de expresiones regulares"
+msgstr "Elige estilo de expresiones regulares"
 
 #: ../src/MainWindow.vala:145
 msgid "Match Information"
