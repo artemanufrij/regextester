@@ -43,6 +43,8 @@ namespace RegexTester {
 
         Settings settings;
 
+        uint typing_timer = 0;
+
         public MainWindow () {
             settings = Settings.get_default ();
             this.width_request = settings.window_width;
@@ -189,71 +191,80 @@ namespace RegexTester {
         }
 
         private void check_regex () {
-            var regex = this.entry.text;
-            entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, null);
 
-            var buffer = result.buffer;
-            var text = buffer.text;
-
-            // FIXME: We need a faster method…?
-            foreach (var child in matches.get_children ()) {
-                matches.remove (child);
+            if (typing_timer != 0) {
+                Source.remove (typing_timer);
             }
 
-            Gtk.TextIter s, e;
-            buffer.get_bounds (out s, out e);
+            typing_timer = GLib.Timeout.add (300, () => {
+                var regex = this.entry.text;
+                entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, null);
 
-            reset_tags (buffer);
+                var buffer = result.buffer;
+                var text = buffer.text;
 
-            if (regex == "") {
-                return;
-            }
-
-            try {
-                RegexCompileFlags flags = RegexCompileFlags.JAVASCRIPT_COMPAT ;
-                if (multiline.active) {
-                    flags |= RegexCompileFlags.MULTILINE;
-                }
-                if (style_chooser.active_id == "Javascript") {
-                    flags |= RegexCompileFlags.JAVASCRIPT_COMPAT;
+                foreach (var child in matches.get_children ()) {
+                    matches.remove (child);
                 }
 
-                var reg = new Regex (regex, flags);
-                MatchInfo mi;
+                Gtk.TextIter s, e;
+                buffer.get_bounds (out s, out e);
 
-                if (reg.match(text, 0 , out mi)) {
-                    bool mod = true;
-                    int count = 1;
+                reset_tags (buffer);
 
-                    int pos_start = 0;
-                    int pos_end = 0;
-                    do {
-                        mi.fetch_pos (0, out pos_start, out pos_end);
-                        if (pos_start == pos_end) {
-                            continue;
-                        }
-                        s.set_offset (pos_start - shift_unichar (text, pos_start));
-                        e.set_offset (pos_end - shift_unichar (text, pos_end));
-
-                        string str = mi.fetch (0);
-
-                        match (count, str, pos_start, pos_end);
-
-                        if (mod) {
-                            buffer.apply_tag_by_name ("marked_first", s, e);
-                        } else {
-                            buffer.apply_tag_by_name ("marked_second", s, e);
-                        }
-                        mod = !mod;
-                        count ++;
-
-                    } while (mi.next ());
+                if (regex == "") {
+                    typing_timer = 0;
+                    return false;
                 }
-            } catch (Error e) {
-                warning (e.message);
-                entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "process-error");
-                entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, e.message);
-            }
+
+                try {
+                    RegexCompileFlags flags = RegexCompileFlags.JAVASCRIPT_COMPAT ;
+                    if (multiline.active) {
+                        flags |= RegexCompileFlags.MULTILINE;
+                    }
+                    if (style_chooser.active_id == "Javascript") {
+                        flags |= RegexCompileFlags.JAVASCRIPT_COMPAT;
+                    }
+
+                    var reg = new Regex (regex, flags);
+                    MatchInfo mi;
+
+                    if (reg.match(text, 0 , out mi)) {
+                        bool mod = true;
+                        int count = 1;
+
+                        int pos_start = 0;
+                        int pos_end = 0;
+                        do {
+                            mi.fetch_pos (0, out pos_start, out pos_end);
+                            if (pos_start == pos_end) {
+                                continue;
+                            }
+                            s.set_offset (pos_start - shift_unichar (text, pos_start));
+                            e.set_offset (pos_end - shift_unichar (text, pos_end));
+
+                            string str = mi.fetch (0);
+
+                            match (count, str, pos_start, pos_end);
+
+                            if (mod) {
+                                buffer.apply_tag_by_name ("marked_first", s, e);
+                            } else {
+                                buffer.apply_tag_by_name ("marked_second", s, e);
+                            }
+                            mod = !mod;
+                            count ++;
+
+                        } while (mi.next ());
+                    }
+                } catch (Error e) {
+                    warning (e.message);
+                    entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "process-error");
+                    entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, e.message);
+                }
+                typing_timer = 0;
+                return false;
+            });
         }
 
         private void set_selected_match (int start, int end) {
@@ -286,20 +297,17 @@ namespace RegexTester {
         }
 
         private int shift_unichar (string text, int pos){
-            // FIXME: we need a better method for counting unichars. unichars have a length of 2 per character
-            unichar [] black_list = {'«', '»', 'ß', 'ä', 'Ä', 'ö', 'Ö', 'ü', 'Ü'};
             int return_value = 0;
+            var substring = text.substring (0, pos);
 
-            foreach (var c in black_list) {
-                int cur_pos = -1;
-                do {
-                    cur_pos = text.index_of_char (c, cur_pos + 1);
-                    if (cur_pos > -1 && cur_pos < pos){
-                        return_value += 1;
-                    }
-                } while (cur_pos > -1 && cur_pos < pos);
+            foreach (var c in substring.to_utf8 ()) {
+                if (c.isprint () || c.isspace ()) {
+                    continue;
+                }
+                return_value += 1;
             }
-            return return_value;
+
+            return return_value / 2;
         }
     }
 }
