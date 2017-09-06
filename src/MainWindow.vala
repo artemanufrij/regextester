@@ -218,7 +218,7 @@ namespace RegexTester {
                 }
 
                 try {
-                    RegexCompileFlags flags = RegexCompileFlags.JAVASCRIPT_COMPAT ;
+                    RegexCompileFlags flags = RegexCompileFlags.JAVASCRIPT_COMPAT;
                     if (multiline.active) {
                         flags |= RegexCompileFlags.MULTILINE;
                     }
