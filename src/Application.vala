@@ -27,7 +27,7 @@
 
 namespace RegexTester {
 
-    public class RegexTesterApp : Granite.Application {
+    public class RegexTesterApp : Gtk.Application {
 
         static RegexTesterApp _instance = null;
 
@@ -40,11 +40,6 @@ namespace RegexTester {
         }
 
         construct {
-            program_name = "Regex Tester";
-            exec_name = "com.github.artemanufrij.regextester";
-            application_id = "com.github.artemanufrij.regestester";
-            app_launcher = application_id + ".desktop";
-            this.flags |= GLib.ApplicationFlags.HANDLES_OPEN;
         }
 
         Gtk.Window mainwindow;

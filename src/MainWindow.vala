@@ -240,12 +240,16 @@ namespace RegexTester {
                             if (pos_start == pos_end) {
                                 continue;
                             }
-                            s.set_offset (pos_start - shift_unichar (text, pos_start));
-                            e.set_offset (pos_end - shift_unichar (text, pos_end));
+
+                            int offset_start = pos_start - shift_unichar (text, pos_start);
+                            int offset_end = pos_end - shift_unichar (text, pos_end);
+
+                            s.set_offset (offset_start);
+                            e.set_offset (offset_end);
 
                             string str = mi.fetch (0);
 
-                            match (count, str, pos_start, pos_end);
+                            match (count, str, offset_start, offset_end);
 
                             if (mod) {
                                 buffer.apply_tag_by_name ("marked_first", s, e);
