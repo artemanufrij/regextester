@@ -31,11 +31,9 @@ namespace RegexTester.Widgets {
         public int start { get; set; }
         public int end { get; set; }
 
-        Gtk.Menu menu;
-
-        public MatchItem (int count, string text, int start, int end) {
-            this.start = start;
-            this.end = end;
+        public MatchItem (int count, GLib.List<RegexTester.GroupItem> group_items) {
+            this.start = group_items.first ().data.pos_start;
+            this.end = group_items.first ().data.pos_end;
             var content = new Gtk.Grid ();
             content.margin = 6;
             content.row_spacing = 6;
@@ -44,15 +42,53 @@ namespace RegexTester.Widgets {
             match_count.hexpand = true;
             match_count.halign = Gtk.Align.START;
 
-            var match_text = new Gtk.Label (text);
-            match_text.tooltip_text = text;
-            match_text.ellipsize = Pango.EllipsizeMode.MIDDLE;
-            match_text.hexpand = true;
-            match_text.halign = Gtk.Align.START;
+            var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            int group_counter = 0;
+            foreach (var item in group_items) {
+                
+                var row = new Gtk.Grid ();
+                row.column_spacing = 4;
+                var menu = new Gtk.Menu ();
+                var menu_copy = new Gtk.MenuItem.with_label (_("Copy match…"));
+                menu_copy.activate.connect (() => {
+                    Gtk.Clipboard.get_default (Gdk.Display.get_default ()).set_text (item.text, -1);
+                });
 
-            var event_box = new Gtk.EventBox ();
-            event_box.button_press_event.connect (show_context_menu);
-            event_box.add (match_text);
+                var match_text = new Gtk.Label ("");
+                match_text.use_markup = true;
+                if (item == group_items.first ().data) {
+                    match_text.label = "<b>%s</b>".printf (item.text);
+                } else {
+                    match_text.label = _("<small>Group %d:</small> %s").printf (group_counter, item.text);
+                }
+                match_text.tooltip_text = item.text;
+                match_text.ellipsize = Pango.EllipsizeMode.MIDDLE;
+                match_text.hexpand = true;
+                match_text.halign = Gtk.Align.START;
+
+                var event_box = new Gtk.EventBox ();
+                event_box.button_press_event.connect ((sender, evt) => {
+                    if (evt.type == Gdk.EventType.BUTTON_PRESS && evt.button == 3) {
+                        menu.popup (null, null, null, evt.button, evt.time);
+                        return true;
+                    }
+                    return false;
+                });
+                event_box.add (match_text);
+
+                var pos = new Gtk.Label (("<small>%d - %d</small>").printf (item.pos_start, item.pos_end));
+                pos.use_markup = true;
+                pos.halign = Gtk.Align.END;
+
+                menu.append (menu_copy);
+                menu.show_all ();
+
+                row.attach (event_box, 0, 0);
+                row.attach (pos, 1, 0);
+                box.pack_start (row, true, true, 0);
+
+                group_counter ++;
+            }
 
             string pkgdir = Constants.PKGDATADIR;
 
@@ -62,34 +98,13 @@ namespace RegexTester.Widgets {
             } else {
                 icon = new Gtk.Image.from_file(pkgdir + "/icons/regex_match_first.svg");
             }
-            var pos = new Gtk.Label (("<span font_size=\"small\">%d - %d</span>").printf (start, end));
-            pos.use_markup = true;
-            pos.halign = Gtk.Align.END;
-
-            menu = new Gtk.Menu ();
-
-            var menu_copy = new Gtk.MenuItem.with_label (_("Copy match…"));
-            menu_copy.activate.connect (() => {
-                Gtk.Clipboard.get_default (Gdk.Display.get_default ()).set_text (text, -1);
-            });
-
-            menu.append (menu_copy);
-            menu.show_all ();
 
             content.attach (icon, 0, 0);
             content.attach (match_count, 1, 0);
-            content.attach (pos, 2, 0);
-            content.attach (event_box, 0, 1, 3, 1);
+            content.attach (box, 0, 1, 2, 1);
             this.add (content);
         }
 
-        private bool show_context_menu (Gtk.Widget sender, Gdk.EventButton evt) {
-            if (evt.type == Gdk.EventType.BUTTON_PRESS && evt.button == 3) {
-                menu.popup (null, null, null, evt.button, evt.time);
-                return true;
-            }
-            return false;
-        }
     }
 }
 

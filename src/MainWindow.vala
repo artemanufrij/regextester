@@ -29,7 +29,7 @@ namespace RegexTester {
 
     public class MainWindow : Gtk.Window {
 
-        public signal void match (int count, string text, int start, int end);
+        public signal void match (int count, GLib.List<RegexTester.GroupItem> group_items);
 
         Gtk.Grid sidebar;
         Gtk.ListBox matches;
@@ -50,10 +50,9 @@ namespace RegexTester {
             this.width_request = settings.window_width;
             this.height_request = settings.window_height;
 
-            this.match.connect ((count, text, start, end) => {
-                this.matches.add (new Widgets.MatchItem (count, text, start, end));
+            this.match.connect ((count, group_items) => {
+                this.matches.add (new Widgets.MatchItem (count, group_items));
                 this.matches.show_all ();
-                debug ("%s, %d - %d", text, start, end);
             });
 
             this.destroy.connect (() => {
@@ -106,8 +105,13 @@ namespace RegexTester {
             result.top_margin = result.left_margin = result.bottom_margin = result.right_margin = 12;
             result.wrap_mode = Gtk.WrapMode.WORD;
 
-            result.buffer.create_tag ("marked_first", "background", "#64baff");
-            result.buffer.create_tag ("marked_second", "background", "#9bdb4d");
+            result.buffer.create_tag ("marked_first", "background", "#8cd5ff");
+            result.buffer.create_tag ("marked_second", "background", "#d1ff82");
+            result.buffer.create_tag ("marked_sub_0", "background", "#abacae");
+            result.buffer.create_tag ("marked_sub_1", "background", "#ff8c82");
+            result.buffer.create_tag ("marked_sub_2", "background", "#f9c440");
+            result.buffer.create_tag ("marked_sub_3", "background", "#95a3ab");
+            result.buffer.create_tag ("marked_sub_4", "background", "#e29ffc");
             result.buffer.create_tag ("marked_highlight", "background", "#ffa154");
             result.buffer.changed.connect (check_regex);
 
@@ -236,29 +240,38 @@ namespace RegexTester {
                         int pos_start = 0;
                         int pos_end = 0;
                         do {
-                            mi.fetch_pos (0, out pos_start, out pos_end);
-                            if (pos_start == pos_end) {
-                                continue;
+                            GLib.List<RegexTester.GroupItem> group_items = new GLib.List<RegexTester.GroupItem> ();
+
+                            for (int i = 0; i < mi.get_match_count (); i++) {
+                                mi.fetch_pos (i, out pos_start, out pos_end);
+                                if (pos_start == pos_end) {
+                                    continue;
+                                }
+
+                                int offset_start = pos_start - shift_unichar (text, pos_start);
+                                int offset_end = pos_end - shift_unichar (text, pos_end);
+
+                                s.set_offset (offset_start);
+                                e.set_offset (offset_end);
+
+                                if (i == 0) {
+                                    if (mod) {
+                                        buffer.apply_tag_by_name ("marked_first", s, e);
+                                    } else {
+                                        buffer.apply_tag_by_name ("marked_second", s, e);
+                                    }
+                                    mod = !mod;
+                                } else {
+                                    var sub_mod = "marked_sub_" + (i % 5).to_string ();
+                                    buffer.apply_tag_by_name (sub_mod, s, e);
+                                }
+                                string str = mi.fetch (i);
+
+                                var new_group_item = new RegexTester.GroupItem (str, offset_start, offset_end);
+                                group_items.append (new_group_item);
                             }
-
-                            int offset_start = pos_start - shift_unichar (text, pos_start);
-                            int offset_end = pos_end - shift_unichar (text, pos_end);
-
-                            s.set_offset (offset_start);
-                            e.set_offset (offset_end);
-
-                            string str = mi.fetch (0);
-
-                            match (count, str, offset_start, offset_end);
-
-                            if (mod) {
-                                buffer.apply_tag_by_name ("marked_first", s, e);
-                            } else {
-                                buffer.apply_tag_by_name ("marked_second", s, e);
-                            }
-                            mod = !mod;
+                            match (count, group_items);
                             count ++;
-
                         } while (mi.next ());
                     }
                 } catch (Error e) {
@@ -295,9 +308,7 @@ namespace RegexTester {
             s.set_offset (0);
             e.set_offset (text.length);
 
-            buffer.remove_tag_by_name ("marked_highlight", s, e);
-            buffer.remove_tag_by_name ("marked_first", s, e);
-            buffer.remove_tag_by_name ("marked_second", s, e);
+            buffer.remove_all_tags (s, e);
         }
 
         private int shift_unichar (string text, int pos){
