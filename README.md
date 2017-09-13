@@ -9,7 +9,7 @@
 
 ### Hot to build from github.
 
-* Clone repository and move into folder
+* Clone repository and change directory
 ```
 git clone https://github.com/artemanufrij/regextester.git
 cd regextester
