@@ -9,13 +9,13 @@
 
 ### Hot to build from github.
 
-* Clone repository and change directory
+Clone repository and change directory
 ```
 git clone https://github.com/artemanufrij/regextester.git
 cd regextester
 ```
 
-* Create **build** folder, compile and start Regextester
+Create **build** folder, compile and start Regextester
 ```
 mkdir build
 cd build
@@ -24,7 +24,7 @@ make
 ./src/com.github.artemanufrij.regextester
 ```
 
-* (optional) Install on your system
+(optional) Install on your system
 ```
 sudo make install
 ```
