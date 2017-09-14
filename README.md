@@ -9,6 +9,11 @@
 
 ### Hot to build from github.
 
+Install elementary SDK
+```
+sudo apt install elementary-sdk
+```
+
 Clone repository and change directory
 ```
 git clone https://github.com/artemanufrij/regextester.git
