@@ -9,7 +9,7 @@
 
 ## Install from Github.
 
-Install elementary SDK
+As first you need elementary SDK
 ```
 sudo apt install elementary-sdk
 ```
@@ -29,7 +29,7 @@ make
 ./src/com.github.artemanufrij.regextester
 ```
 
-(optional) Install on your system
+(optional) Install Regextester on your system
 ```
 sudo make install
 ```
