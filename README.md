@@ -7,7 +7,7 @@
 ![screenshot](Screenshot.png)
 
 
-### Hot to build from github.
+## Install from Github.
 
 Install elementary SDK
 ```
