@@ -28,4 +28,14 @@
             <image>https://raw.githubusercontent.com/artemanufrij/regextester/master/Screenshot.png</image>
         </screenshot>
     </screenshots>
+    <releases>
+        <release version="0.1.5" date="2017-11-10">
+            <description>
+                <p>New:</p>
+                <ul>
+                    <li>Group support</li>
+                </ul>
+            </description>
+        </release>
+    </releases>
 </component>
