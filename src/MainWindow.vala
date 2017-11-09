@@ -51,6 +51,9 @@ namespace RegexTester {
             this.height_request = settings.window_height;
 
             this.match.connect ((count, group_items) => {
+                if (group_items.length () == 0) {
+                    return;
+                }
                 this.matches.add (new Widgets.MatchItem (count, group_items));
                 this.matches.show_all ();
             });
