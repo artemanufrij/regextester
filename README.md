@@ -6,6 +6,8 @@
 
 ![screenshot](Screenshot.png)
 
+## Donations
+If you liked _Regex Tester_, and would like to support it's development of this app and more, consider [buying me a coffee](https://www.paypal.me/ArtemAnufrij) :)
 
 ## Install from Github.
 
