@@ -1,11 +1,20 @@
-# RegEx Tester
+<div>
+  <h1 align="center">RegEx Tester</h1>
+  <h3 align="center">A simple regex tester</h3>
+  <p align="center">Designed for <a href="https://elementary.io"> elementary OS</p>
+</div>
+<p align="center">
+  <a href="https://appcenter.elementary.io/com.github.artemanufrij.regextester">
+    <img src="https://appcenter.elementary.io/badge.svg" alt="Get it on AppCenter">
+  </a>
+</p>
 
-[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.artemanufrij.regextester)
+<p align="center">
+<img src="Screenshot.png"/>
+</p>
 
-### A simple regex tester designed for [elementary OS](https://elementary.io)
-
-![screenshot](Screenshot.png)
-
+## Donations
+If you liked _Regex Tester_, and would like to support it's development of this app and more, consider [buying me a coffee](https://www.paypal.me/ArtemAnufrij) :)
 
 ## Install from Github.
 
