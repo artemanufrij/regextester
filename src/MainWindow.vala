@@ -76,7 +76,7 @@ namespace RegexTester {
             headerbar.title = _("Regex Tester");
             headerbar.show_close_button = true;
 
-            var show_sidebar = new Gtk.Button.from_icon_name ("pane-show-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
+            var show_sidebar = new Gtk.Button.from_icon_name ("pane-hide-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
             show_sidebar.clicked.connect (() => {
                 sidebar.visible = !sidebar.visible;
             });
@@ -128,10 +128,10 @@ namespace RegexTester {
             sidebar.width_request = 120;
             sidebar.notify["visible"].connect (() => {
                 if (sidebar.visible) {
-                    show_sidebar.image = new Gtk.Image.from_icon_name ("pane-hide-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
+                    show_sidebar.image = new Gtk.Image.from_icon_name ("pane-show-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
                     show_sidebar.tooltip_text = _("Hide Sidebar");
                 } else {
-                    show_sidebar.image = new Gtk.Image.from_icon_name ("pane-show-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
+                    show_sidebar.image = new Gtk.Image.from_icon_name ("pane-hide-symbolic-rtl", Gtk.IconSize.LARGE_TOOLBAR);
                     show_sidebar.tooltip_text = _("Show Sidebar");
                 }
             });
