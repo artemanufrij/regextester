@@ -10,6 +10,16 @@
 			<summary>The saved height of the window.</summary>
 			<description>The saved height of the window.</description>
 		</key>
+		<key name="window-x" type="i">
+			<default>-1</default>
+			<summary>The saved x-position of the window.</summary>
+			<description>The saved x-position of the window.</description>
+		</key>
+		<key name="window-y" type="i">
+			<default>-1</default>
+			<summary>The saved y-position of the window.</summary>
+			<description>The saved y-position of the window.</description>
+		</key>
 		<key name="sidebar-visible" type="b">
 		    <default>true</default>
 			<summary>Sidebar visibility.</summary>

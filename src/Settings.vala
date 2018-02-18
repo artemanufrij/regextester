@@ -37,6 +37,8 @@ namespace RegexTester {
         }
         public int window_width { get; set; }
         public int window_height { get; set; }
+        public int window_x { get; set; }
+        public int window_y { get; set; }
         public bool multiline { get; set; }
         public bool sidebar_visible { get; set; }
         public string regex_style { get; set; }
