@@ -73,6 +73,7 @@ namespace RegexTester {
             headerbar = new Gtk.HeaderBar ();
             headerbar.title = _ ("Regex Tester");
             headerbar.show_close_button = true;
+            headerbar.get_style_context ().add_class ("default-decoration");
 
             var show_sidebar = new Gtk.Button.from_icon_name ("pane-show-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
             show_sidebar.clicked.connect (
