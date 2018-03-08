@@ -1,6 +1,6 @@
 <div>
   <h1 align="center">RegEx Tester</h1>
-  <h3 align="center">A simple regex tester</h3>
+  <h3 align="center"><img src="data/icons/com.github.artemanufrij.regextester.svg"/><br>A simple regex tester</h3>
   <p align="center">Designed for <a href="https://elementary.io"> elementary OS</p>
 </div>
 
