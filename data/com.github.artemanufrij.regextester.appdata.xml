@@ -7,8 +7,7 @@
     <name>Regex Tester</name>
     <summary>A simple app for testing regular expressions</summary>
     <description>
-        <p>A regular expression is a special text string that describes a search pattern.</p>
-        <p>Regex Tester shows all matches of search pattern in a string.</p>
+        <p>A regular expression is a special text string that describes a search pattern. Regex Tester shows all matches of search pattern in a string.</p>
     </description>
     <categories>
         <category>Development</category>
