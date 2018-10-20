@@ -45,7 +45,7 @@ namespace RegexTester.Widgets {
             var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             int group_counter = 0;
             foreach (var item in group_items) {
-                
+
                 var row = new Gtk.Grid ();
                 row.column_spacing = 4;
                 var menu = new Gtk.Menu ();
@@ -90,7 +90,7 @@ namespace RegexTester.Widgets {
                 group_counter ++;
             }
 
-            string pkgdir = Constants.PKGDATADIR;
+            string pkgdir = "/usr/share/" + GLib.Environment.get_application_name ();
 
             Gtk.Image icon;
             if (count % 2 == 0) {
@@ -107,4 +107,3 @@ namespace RegexTester.Widgets {
 
     }
 }
-

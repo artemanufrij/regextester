@@ -2,8 +2,7 @@ Source: com.github.artemanufrij.regextester
 Section: x11
 Priority: optional
 Maintainer: Artem Anufrij <artem.anufrij@live.de>
-Build-Depends: cmake (>= 2.8),
-               cmake-elementary,
+Build-Depends: meson,
                debhelper (>= 9),
                libgranite-dev,
                valac (>= 0.26)

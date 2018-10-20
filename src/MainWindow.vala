@@ -47,12 +47,6 @@ namespace RegexTester {
             settings = Settings.get_default ();
             load_settings ();
 
-            this.configure_event.connect (
-                (event) => {
-                    settings.window_width = event.width;
-                    settings.window_height = event.height;
-                    return false;
-                });
             this.match.connect (
                 (count, group_items) => {
                     if (group_items.length () == 0) {
@@ -96,7 +90,7 @@ namespace RegexTester {
             var result_label = new Gtk.Label ("<b>%s</b>".printf ("Test String"));
             result_label.use_markup = true;
             result_label.margin = 6;
-            result_label.margin_left = 12;
+            result_label.margin_start = 12;
             result_label.halign = Gtk.Align.START;
             content.attach (result_label, 0, 1);
 
@@ -346,6 +340,12 @@ namespace RegexTester {
             this.get_position (out x, out y);
             settings.window_x = x;
             settings.window_y = y;
+
+            int width, height;
+            this.get_size (out width, out height);
+            settings.window_height = height;
+            settings.window_width = width;
+
             settings.sidebar_visible = this.sidebar.visible;
             settings.multiline = this.multiline.active;
             settings.regex_style = this.style_chooser.active_id;
