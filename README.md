@@ -13,6 +13,9 @@
   <a href="https://appcenter.elementary.io/com.github.artemanufrij.regextester">
     <img src="https://appcenter.elementary.io/badge.svg" alt="Get it on AppCenter">
   </a>
+  <a href="https://flathub.org/apps/details/com.github.artemanufrij.regextester">
+    <img src="https://flathub.org/assets/badges/flathub-badge-i-en.svg" width="150px" alt="Download On Flathub">
+  </a>
 </p>
 
 <p align="center">
