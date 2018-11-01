@@ -9,9 +9,6 @@
     <description>
         <p>A regular expression is a special text string that describes a search pattern. Regex Tester shows all matches of search pattern in a string.</p>
     </description>
-    <categories>
-        <category>Development</category>
-    </categories>
     <custom>
         <value key="x-appcenter-color-primary">#3a9104</value>
         <value key="x-appcenter-color-primary-text">rgb(255,255,255)</value>
@@ -21,7 +18,12 @@
     <url type="homepage">https://github.com/artemanufrij/regextester</url>
     <url type="bugtracker">https://github.com/artemanufrij/regextester/issues</url>
     <url type="help">https://github.com/artemanufrij/regextester/issues</url>
+    <url type="donation">https://www.paypal.me/ArtemAnufrij</url>
+    <url type="translate">https://github.com/artemanufrij/regextester</url>
+    <translation type="gettext">com.github.artemanufrij.regextester</translation>
     <update_contact>artem.anufrij@live.de</update_contact>
+​    <launchable type="desktop-id">com.github.artemanufrij.regextester.desktop</launchable>
+
     <screenshots>
         <screenshot type="default">
             <image>https://raw.githubusercontent.com/artemanufrij/regextester/master/screenshots/Screenshot.png</image>
