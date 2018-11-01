@@ -28,6 +28,11 @@
         </screenshot>
     </screenshots>
     <releases>
+        <release version="1.0.2" date="2018-11-01">
+            <description>
+                Fix for flatpak
+            </description>
+        </release>
         <release version="1.0.1" date="2018-10-24">
             <description>
                 Switch to Meson
