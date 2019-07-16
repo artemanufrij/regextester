@@ -30,6 +30,14 @@
         </screenshot>
     </screenshots>
     <releases>
+        <release version="1.0.3" date="2019-07-17">
+            <description>
+                <p>Translation:</p>
+                <ul>
+                    <li>French (by Nathan Bonnemains)</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.0.2" date="2018-11-01">
             <description>
                 Fix for flatpak
