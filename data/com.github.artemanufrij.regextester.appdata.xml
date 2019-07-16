@@ -30,8 +30,12 @@
         </screenshot>
     </screenshots>
     <releases>
-        <release version="1.0.3" date="2019-07-17">
+        <release version="1.1.0" date="2019-07-17">
             <description>
+                <p>New:</p>
+                <ul>
+                    <li>Quit app by Ctrl+Q</li>
+                </ul>
                 <p>Translation:</p>
                 <ul>
                     <li>French (by Nathan Bonnemains)</li>
