@@ -1,15 +1,15 @@
 # French translations for com.github.artemanufrij.regextester package.
 # Copyright (C) 2019 THE com.github.artemanufrij.regextester'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.artemanufrij.regextester package.
-# Automatically generated, 2019.
+# NathanBnm, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.artemanufrij.regextester\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-19 13:21+0200\n"
+"POT-Creation-Date: 2019-07-19 13:38+0200\n"
 "PO-Revision-Date: 2019-07-19 13:21+0200\n"
-"Last-Translator: Automatically generated\n"
+"Last-Translator: NathanBnm\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -20,49 +20,49 @@ msgstr ""
 #: src/Widgets/MatchItem.vala:41
 #, c-format
 msgid "Match %d"
-msgstr ""
+msgstr "Correspondance %d"
 
 #: src/Widgets/MatchItem.vala:52
 msgid "Copy match…"
-msgstr ""
+msgstr "Copier la correspondance…"
 
 #: src/Widgets/MatchItem.vala:62
 #, c-format
 msgid "<small>Group %d:</small> %s"
-msgstr ""
+msgstr "<small>Groupe %d:</small> %s"
 
 #: src/MainWindow.vala:68
 msgid "Regex Tester"
-msgstr ""
+msgstr "Testeur Regex"
 
 #: src/MainWindow.vala:86
 msgid "Regular expression"
-msgstr ""
+msgstr "Expression régulière"
 
 #: src/MainWindow.vala:90
 msgid "Test String"
-msgstr ""
+msgstr "Tester la chaîne"
 
 #: src/MainWindow.vala:127
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "Masquer la barre latérale"
 
 #: src/MainWindow.vala:130
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Afficher la barre latérale"
 
 #: src/MainWindow.vala:140
 msgid "Multiline"
-msgstr ""
+msgstr "Multiligne"
 
 #: src/MainWindow.vala:150
 msgid "Regex Style"
-msgstr ""
+msgstr "Type de Regex"
 
 #: src/MainWindow.vala:158
 msgid "Choose a Regex Style"
-msgstr ""
+msgstr "Sélectionner un type de Regex"
 
 #: src/MainWindow.vala:162
 msgid "Match Information"
-msgstr ""
+msgstr "Informations de correspondance"

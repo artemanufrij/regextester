@@ -1,15 +1,15 @@
 # French translations for extra package.
 # Copyright (C) 2019 THE extra'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the extra package.
-# Automatically generated, 2019.
+# NathanBnm, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-19 13:22+0200\n"
+"POT-Creation-Date: 2019-07-19 13:38+0200\n"
 "PO-Revision-Date: 2019-07-19 13:22+0200\n"
-"Last-Translator: Automatically generated\n"
+"Last-Translator: NathanBnm\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -21,80 +21,83 @@ msgstr ""
 #: data/com.github.artemanufrij.regextester.desktop.in:4
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:7
 msgid "Regex Tester"
-msgstr ""
+msgstr "Testeur Regex"
 
 #: data/com.github.artemanufrij.regextester.desktop.in:5
 msgid "Testing regular expressions"
-msgstr ""
+msgstr "Testez des expressions régulières"
 
 #: data/com.github.artemanufrij.regextester.desktop.in:6
 msgid "regex;regular;expressions;"
-msgstr ""
+msgstr "regex;régulières;expressions;"
 
 #: data/com.github.artemanufrij.regextester.desktop.in:8
 msgid "com.github.artemanufrij.regextester"
-msgstr ""
+msgstr "com.github.artemanufrij.regextester"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:8
 msgid "A simple app for testing regular expressions"
-msgstr ""
+msgstr "Une simple application pour tester des expressions régulières"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:10
 msgid ""
 "A regular expression is a special text string that describes a search "
 "pattern. Regex Tester shows all matches of search pattern in a string."
 msgstr ""
+"Une expression régulière est une chaîne de caractère spécifique qui définit "
+"un modèle de recherche.Testeur Regex vous affiche toutes les correspondances "
+"de ce modèle dans une chaîne de caractère."
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:17
 msgid "Artem Anufrij"
-msgstr ""
+msgstr "Artem Anufrij"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:35
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:82
 msgid "New:"
-msgstr ""
+msgstr "Nouveau :"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:37
 msgid "Quit app by Ctrl+Q"
-msgstr ""
+msgstr "Quittez l'application avec Ctrl + Q"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:39
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:57
 msgid "Translation:"
-msgstr ""
+msgstr "Traduction :"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:41
 msgid "French (by Nathan Bonnemains)"
-msgstr ""
+msgstr "Français (par Nathan Bonnemains)"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:46
 msgid "Fix for flatpak"
-msgstr ""
+msgstr "Corrections pour Flatpak"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:53
 msgid "Fixed:"
-msgstr ""
+msgstr "Correction :"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:55
 msgid "Restore correct window size"
-msgstr ""
+msgstr "Restauration de la taille correcte de la fenêtre"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:59
 msgid "Dutch (by Heimen Stoffels)"
-msgstr ""
+msgstr "Néerlandais (par Heimen Stoffels)"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:64
 msgid "Prepare for JUNO"
-msgstr ""
+msgstr "Préparation pour JUNO"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:69
 msgid "Save/restore window size and position"
-msgstr ""
+msgstr "Sauvegarde/Restauration de la taille et de la position de la fenêtre"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:74
 msgid "Small UX changes"
-msgstr ""
+msgstr "Modifications mineures de l'interface"
 
 #: data/com.github.artemanufrij.regextester.appdata.xml.in:84
 msgid "Group support"
-msgstr ""
+msgstr "Prise en charge des groupes"
