@@ -41,7 +41,7 @@ msgstr "Expression régulière"
 
 #: src/MainWindow.vala:90
 msgid "Test String"
-msgstr "Tester la chaîne"
+msgstr "Tester une chaîne de caractère"
 
 #: src/MainWindow.vala:127
 msgid "Hide Sidebar"
