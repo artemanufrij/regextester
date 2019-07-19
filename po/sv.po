@@ -1,5 +1,68 @@
+# Swedish translations for com.github.artemanufrij.regextester package.
+# Copyright (C) 2019 THE com.github.artemanufrij.regextester'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.artemanufrij.regextester package.
+# Automatically generated, 2019.
+#
 msgid ""
 msgstr ""
+"Project-Id-Version: com.github.artemanufrij.regextester\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-19 13:38+0200\n"
+"PO-Revision-Date: 2019-07-19 13:21+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/Widgets/MatchItem.vala:41
+#, c-format
+msgid "Match %d"
+msgstr ""
+
+#: src/Widgets/MatchItem.vala:52
+msgid "Copy match…"
+msgstr ""
+
+#: src/Widgets/MatchItem.vala:62
+#, c-format
+msgid "<small>Group %d:</small> %s"
+msgstr ""
+
+#: src/MainWindow.vala:68
+msgid "Regex Tester"
+msgstr ""
+
+#: src/MainWindow.vala:86
+msgid "Regular expression"
+msgstr ""
+
+#: src/MainWindow.vala:90
+msgid "Test String"
+msgstr ""
+
+#: src/MainWindow.vala:127
+msgid "Hide Sidebar"
+msgstr ""
+
+#: src/MainWindow.vala:130
+msgid "Show Sidebar"
+msgstr ""
+
+#: src/MainWindow.vala:140
+msgid "Multiline"
+msgstr ""
+
+#: src/MainWindow.vala:150
+msgid "Regex Style"
+msgstr ""
+
+#: src/MainWindow.vala:158
+msgid "Choose a Regex Style"
+msgstr ""
+
+#: src/MainWindow.vala:162
+msgid "Match Information"
+msgstr ""

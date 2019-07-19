@@ -94,9 +94,9 @@ namespace RegexTester.Widgets {
 
             Gtk.Image icon;
             if (count % 2 == 0) {
-                icon = new Gtk.Image.from_file(pkgdir + "/icons/regex_match_second.svg");
+                icon = new Gtk.Image.from_file(pkgdir + "/icons/regex-match-second.svg");
             } else {
-                icon = new Gtk.Image.from_file(pkgdir + "/icons/regex_match_first.svg");
+                icon = new Gtk.Image.from_file(pkgdir + "/icons/regex-match-first.svg");
             }
 
             content.attach (icon, 0, 0);

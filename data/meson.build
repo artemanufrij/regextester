@@ -1,36 +1,38 @@
-icon_sizes = ['32', '48', '64']
+i18n.merge_file(
+  input: meson.project_name() + '.desktop.in',
+  output: meson.project_name() + '.desktop',
+  po_dir: join_paths(meson.source_root(), 'po', 'extra'),
+  type: 'desktop',
+  install: true,
+  install_dir: join_paths(get_option('datadir'), 'applications')
+)
 
-foreach i : icon_sizes
-  install_data(
-    join_paths('icons', i, meson.project_name() + '.svg'),
-    install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', i + 'x' + i, 'apps')
+i18n.merge_file(
+  input: meson.project_name() + '.appdata.xml.in',
+  output: meson.project_name() + '.appdata.xml',
+  po_dir: join_paths(meson.source_root(), 'po', 'extra'),
+  install: true,
+  install_dir: join_paths(get_option('datadir'), 'metainfo')
+)
+
+desktop_file_validate = find_program('desktop-file-validate', required:false)
+
+if desktop_file_validate.found()
+  test (
+    'Validate desktop file',
+    desktop_file_validate,
+    args: join_paths(meson.current_build_dir (), meson.project_name() + '.desktop')
   )
-  install_data(
-    join_paths('icons', i, meson.project_name() + '.svg'),
-    install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', i + 'x' + i + '@2', 'apps')
+endif
+
+appstreamcli = find_program(['appstreamcli', 'appstream-util'], required:false)
+
+if appstreamcli.found()
+  test (
+    'Validate appdata file',
+    appstreamcli,
+    args: ['validate', join_paths(meson.current_build_dir (), meson.project_name() + '.appdata.xml')]
   )
-endforeach
+endif
 
-install_data(
-    meson.project_name() + '.desktop',
-    install_dir: join_paths(get_option('datadir'), 'applications')
-)
-
-install_data(
-    meson.project_name() + '.appdata.xml',
-    install_dir: join_paths(get_option('datadir'), 'metainfo')
-)
-
-prefix = get_option('prefix')
-datadir = join_paths(prefix, get_option('datadir'))
-pkgdatadir = join_paths(datadir, meson.project_name())
-
-install_data(
-  join_paths ('icons', 'regex_match_first.svg'),
-  install_dir: join_paths (pkgdatadir, 'icons')
-)
-
-install_data(
-  join_paths ('icons', 'regex_match_second.svg'),
-  install_dir: join_paths (pkgdatadir, 'icons')
-)
+subdir('icons')

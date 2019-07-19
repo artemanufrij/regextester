@@ -7,47 +7,62 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.artemanufrij.regextester\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-29 21:15+0900\n"
-"PO-Revision-Date: 2019-01-18 16:33+0100\n"
+"POT-Creation-Date: 2019-07-19 13:38+0200\n"
+"PO-Revision-Date: 2019-07-19 13:21+0200\n"
 "Last-Translator: NathanBnm\n"
-"Language-Team: Français\n"
+"Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../src/Widgets/MatchItem.vala:36
+#: src/Widgets/MatchItem.vala:41
+#, c-format
 msgid "Match %d"
-msgstr "Tester %d"
+msgstr "Correspondance %d"
 
-#: ../src/MainWindow.vala:61
+#: src/Widgets/MatchItem.vala:52
+msgid "Copy match…"
+msgstr "Copier la correspondance…"
+
+#: src/Widgets/MatchItem.vala:62
+#, c-format
+msgid "<small>Group %d:</small> %s"
+msgstr "<small>Groupe %d:</small> %s"
+
+#: src/MainWindow.vala:68
 msgid "Regex Tester"
 msgstr "Testeur Regex"
 
-#: ../src/MainWindow.vala:77
+#: src/MainWindow.vala:86
 msgid "Regular expression"
 msgstr "Expression régulière"
 
-#: ../src/MainWindow.vala:111
+#: src/MainWindow.vala:90
+msgid "Test String"
+msgstr "Tester une chaîne de caractère"
+
+#: src/MainWindow.vala:127
 msgid "Hide Sidebar"
 msgstr "Masquer la barre latérale"
 
-#: ../src/MainWindow.vala:114
+#: src/MainWindow.vala:130
 msgid "Show Sidebar"
 msgstr "Afficher la barre latérale"
 
-#: ../src/MainWindow.vala:124
+#: src/MainWindow.vala:140
 msgid "Multiline"
-msgstr "Mutiligne"
+msgstr "Multiligne"
 
-#: ../src/MainWindow.vala:133
+#: src/MainWindow.vala:150
 msgid "Regex Style"
-msgstr "Style Regex"
+msgstr "Type de Regex"
 
-#: ../src/MainWindow.vala:141
+#: src/MainWindow.vala:158
 msgid "Choose a Regex Style"
-msgstr "Choisissez un style Regex"
+msgstr "Sélectionner un type de Regex"
 
-#: ../src/MainWindow.vala:145
+#: src/MainWindow.vala:162
 msgid "Match Information"
 msgstr "Informations de correspondance"

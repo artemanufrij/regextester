@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-16 16:55+0200\n"
+"POT-Creation-Date: 2019-07-19 13:38+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -13,38 +13,52 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../src/Widgets/MatchItem.vala:36
+#: src/Widgets/MatchItem.vala:41
+#, c-format
 msgid "Match %d"
 msgstr "Match %d"
 
-#: ../src/MainWindow.vala:61
+#: src/Widgets/MatchItem.vala:52
+msgid "Copy match…"
+msgstr ""
+
+#: src/Widgets/MatchItem.vala:62
+#, c-format
+msgid "<small>Group %d:</small> %s"
+msgstr ""
+
+#: src/MainWindow.vala:68
 msgid "Regex Tester"
 msgstr "Regex Tester"
 
-#: ../src/MainWindow.vala:77
+#: src/MainWindow.vala:86
 msgid "Regular expression"
 msgstr "Regulärer Ausdruck"
 
-#: ../src/MainWindow.vala:111
+#: src/MainWindow.vala:90
+msgid "Test String"
+msgstr ""
+
+#: src/MainWindow.vala:127
 msgid "Hide Sidebar"
 msgstr "Sidebar ausblenden"
 
-#: ../src/MainWindow.vala:114
+#: src/MainWindow.vala:130
 msgid "Show Sidebar"
 msgstr "Sidebar zeigen"
 
-#: ../src/MainWindow.vala:124
+#: src/MainWindow.vala:140
 msgid "Multiline"
 msgstr "Multiline"
 
-#: ../src/MainWindow.vala:133
+#: src/MainWindow.vala:150
 msgid "Regex Style"
 msgstr "Regex Style"
 
-#: ../src/MainWindow.vala:141
+#: src/MainWindow.vala:158
 msgid "Choose a Regex Style"
 msgstr "Regex Style auswählen"
 
-#: ../src/MainWindow.vala:145
+#: src/MainWindow.vala:162
 msgid "Match Information"
 msgstr "Match Informationen"
