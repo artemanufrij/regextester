@@ -87,7 +87,7 @@ namespace RegexTester {
             entry.changed.connect (check_regex);
             content.attach (entry, 0, 0);
 
-            var result_label = new Gtk.Label ("<b>%s</b>".printf ("Test String"));
+            var result_label = new Gtk.Label ("<b>%s</b>".printf (_ ("Test String")));
             result_label.use_markup = true;
             result_label.margin = 6;
             result_label.margin_start = 12;
