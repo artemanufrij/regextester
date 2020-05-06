@@ -40,6 +40,9 @@ namespace RegexTester {
         public int window_x { get; set; }
         public int window_y { get; set; }
         public bool multiline { get; set; }
+        public bool ignore_case { get; set; }
+        public bool global { get; set; }
+        public bool dot_all { get; set; }
         public bool sidebar_visible { get; set; }
         public string regex_style { get; set; }
 

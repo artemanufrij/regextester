@@ -1,39 +1,54 @@
 <schemalist>
-	<schema path="/com/github/artemanufrij/regextester/" id="com.github.artemanufrij.regextester" gettext-domain="com.github.artemanufrij.regextester">
-		<key name="window-width" type="i">
-			<default>720</default>
-			<summary>The saved width of the window.</summary>
-			<description>The saved width of the window.</description>
-		</key>
-		<key name="window-height" type="i">
-			<default>640</default>
-			<summary>The saved height of the window.</summary>
-			<description>The saved height of the window.</description>
-		</key>
-		<key name="window-x" type="i">
-			<default>-1</default>
-			<summary>The saved x-position of the window.</summary>
-			<description>The saved x-position of the window.</description>
-		</key>
-		<key name="window-y" type="i">
-			<default>-1</default>
-			<summary>The saved y-position of the window.</summary>
-			<description>The saved y-position of the window.</description>
-		</key>
-		<key name="sidebar-visible" type="b">
-		    <default>true</default>
-			<summary>Sidebar visibility.</summary>
-			<description>Sidebar visibility.</description>
-		</key>
-		<key name="multiline" type="b">
-		    <default>true</default>
-			<summary>Set Multiline flagSet Multiline flag.</summary>
-			<description>Set Multiline flagSet Multiline flag.</description>
-		</key>
-		<key name="regex-style" type="s">
-		    <default>"Perl"</default>
-			<summary>Regex Style.</summary>
-			<description>Regex Style.</description>
-		</key>
-	</schema>
+  <schema path="/com/github/artemanufrij/regextester/" id="com.github.artemanufrij.regextester" gettext-domain="com.github.artemanufrij.regextester">
+    <key name="window-width" type="i">
+      <default>720</default>
+      <summary>The saved width of the window.</summary>
+      <description>The saved width of the window.</description>
+    </key>
+    <key name="window-height" type="i">
+      <default>640</default>
+      <summary>The saved height of the window.</summary>
+      <description>The saved height of the window.</description>
+    </key>
+    <key name="window-x" type="i">
+      <default>-1</default>
+      <summary>The saved x-position of the window.</summary>
+      <description>The saved x-position of the window.</description>
+    </key>
+    <key name="window-y" type="i">
+      <default>-1</default>
+      <summary>The saved y-position of the window.</summary>
+      <description>The saved y-position of the window.</description>
+    </key>
+    <key name="sidebar-visible" type="b">
+      <default>true</default>
+      <summary>Sidebar visibility.</summary>
+      <description>Sidebar visibility.</description>
+    </key>
+    <key name="multiline" type="b">
+      <default>true</default>
+      <summary>Set Multiline flag.</summary>
+      <description>Set Multiline flag.</description>
+    </key>
+    <key name="ignore-case" type="b">
+      <default>true</default>
+      <summary>Set Ignore Case flag.</summary>
+      <description>Set Ignore Case flag.</description>
+    </key>
+    <key name="global" type="b">
+      <default>true</default>
+      <summary>Set Global flag.</summary>
+      <description>Set Global flag.</description>
+    </key>
+    <key name="dot-all" type="b">
+      <default>false</default>
+      <summary>Set Dot All flag.</summary>
+      <description>Set Dot All flag.</description>
+    </key>
+    <key name="regex-style" type="s">
+      <default>"Perl"</default>
+      <summary>Regex Style.</summary>
+      <description>Regex Style.</description>
+    </key>
+  </schema>
 </schemalist>
