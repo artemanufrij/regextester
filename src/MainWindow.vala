@@ -36,6 +36,9 @@ namespace RegexTester {
         Gtk.ScrolledWindow result_scroll;
         Gtk.HeaderBar headerbar;
         Gtk.Switch multiline;
+        Gtk.Switch ignore_case;
+        Gtk.Switch global;
+        Gtk.Switch dot_all;
 
         Gtk.ComboBoxText style_chooser;
 
@@ -45,7 +48,7 @@ namespace RegexTester {
 
         public MainWindow () {
             settings = Settings.get_default ();
-            load_settings ();
+            load_window_settings ();
 
             this.match.connect (
                 (count, group_items) => {
@@ -81,22 +84,29 @@ namespace RegexTester {
 
             var content = new Gtk.Grid ();
 
+            var entry_label = new Gtk.Label ("<b>%s</b>".printf (_ ("Regular Expression:")));
+            entry_label.use_markup = true;
+            entry_label.margin = 6;
+            entry_label.margin_start = 12;
+            entry_label.margin_bottom = 0;
+            entry_label.halign = Gtk.Align.START;
+            content.attach (entry_label, 0, 0);
+
             entry = new Gtk.Entry ();
             entry.margin = 12;
-            entry.placeholder_text = _ ("Regular expression");
             entry.changed.connect (check_regex);
-            content.attach (entry, 0, 0);
+            content.attach (entry, 0, 1);
 
-            var result_label = new Gtk.Label ("<b>%s</b>".printf (_ ("Test String")));
+            var result_label = new Gtk.Label ("<b>%s</b>".printf (_ ("Test String:")));
             result_label.use_markup = true;
             result_label.margin = 6;
             result_label.margin_start = 12;
             result_label.halign = Gtk.Align.START;
-            content.attach (result_label, 0, 1);
+            content.attach (result_label, 0, 2);
 
             var separator_result = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
             separator_result.hexpand = true;
-            content.attach (separator_result, 0, 2);
+            content.attach (separator_result, 0, 3);
 
             result = new Gtk.TextView ();
             result.top_margin = result.left_margin = result.bottom_margin = result.right_margin = 12;
@@ -116,7 +126,7 @@ namespace RegexTester {
             result_scroll.expand = true;
             result_scroll.add (result);
 
-            content.attach (result_scroll, 0, 3);
+            content.attach (result_scroll, 0, 4);
 
             sidebar = new Gtk.Grid ();
             sidebar.width_request = 120;
@@ -147,9 +157,39 @@ namespace RegexTester {
             multiline.notify["active"].connect (check_regex);
             options.attach (multiline, 1, 0);
 
+            var ignore_case_title = new Gtk.Label (_ ("Ignore Case"));
+            ignore_case_title.halign = Gtk.Align.END;
+            options.attach (ignore_case_title, 0, 1);
+
+            ignore_case = new Gtk.Switch ();
+            ignore_case.halign = Gtk.Align.START;
+            ignore_case.active = settings.ignore_case;
+            ignore_case.notify["active"].connect (check_regex);
+            options.attach (ignore_case, 1, 1);
+
+            var global_title = new Gtk.Label (_ ("Global"));
+            global_title.halign = Gtk.Align.END;
+            options.attach (global_title, 0, 2);
+
+            global = new Gtk.Switch ();
+            global.halign = Gtk.Align.START;
+            global.active = settings.global;
+            global.notify["active"].connect (check_regex);
+            options.attach (global, 1, 2);
+
+            var dot_all_title = new Gtk.Label (_ ("Dot All"));
+            dot_all_title.halign = Gtk.Align.END;
+            options.attach (dot_all_title, 0, 3);
+
+            dot_all = new Gtk.Switch ();
+            dot_all.halign = Gtk.Align.START;
+            dot_all.active = settings.dot_all;
+            dot_all.notify["active"].connect (check_regex);
+            options.attach (dot_all, 1, 3);
+
             var js_compat_title = new Gtk.Label (_ ("Regex Style"));
             js_compat_title.halign = Gtk.Align.END;
-            options.attach (js_compat_title, 0, 1);
+            options.attach (js_compat_title, 0, 4);
 
             style_chooser = new Gtk.ComboBoxText ();
             style_chooser.append ("Javascript", "Javascript");
@@ -157,7 +197,7 @@ namespace RegexTester {
             style_chooser.active_id = settings.regex_style;
             style_chooser.tooltip_text = _ ("Choose a Regex Style");
             style_chooser.changed.connect (check_regex);
-            options.attach (style_chooser, 1, 1);
+            options.attach (style_chooser, 1, 4);
 
             var matches_label = new Gtk.Label ("<b>%s</b>".printf (_ ("Match Information")));
             matches_label.halign = Gtk.Align.START;
@@ -189,8 +229,8 @@ namespace RegexTester {
             this.add (paned);
             this.show_all ();
 
-            result.grab_focus ();
-            sidebar.visible = settings.sidebar_visible;
+            entry.grab_focus ();
+            load_other_settings();
         }
 
         private void check_regex () {
@@ -222,10 +262,24 @@ namespace RegexTester {
                     }
 
                     try {
-                        RegexCompileFlags flags = RegexCompileFlags.JAVASCRIPT_COMPAT;
+                        RegexCompileFlags flags = RegexCompileFlags.OPTIMIZE;
+
                         if (multiline.active) {
                             flags |= RegexCompileFlags.MULTILINE;
                         }
+
+                        if (ignore_case.active) {
+                        	flags |= RegexCompileFlags.CASELESS;
+                        }
+
+                        if (!global.active) {
+                        	flags |= RegexCompileFlags.ANCHORED;
+                        }
+
+                        if (dot_all.active) {
+                        	flags |= RegexCompileFlags.DOTALL;
+                        }
+
                         if (style_chooser.active_id == "Javascript") {
                             flags |= RegexCompileFlags.JAVASCRIPT_COMPAT;
                         }
@@ -325,7 +379,7 @@ namespace RegexTester {
             return return_value / 2;
         }
 
-        private void load_settings () {
+        private void load_window_settings () {
             this.set_default_size (settings.window_width, settings.window_height);
 
             if (settings.window_x < 0 || settings.window_y < 0 ) {
@@ -333,6 +387,16 @@ namespace RegexTester {
             } else {
                 this.move (settings.window_x, settings.window_y);
             }
+        }
+
+
+        private void load_other_settings () {
+        	this.sidebar.visible = settings.sidebar_visible;
+        	this.multiline.active = settings.multiline;
+        	this.ignore_case.active = settings.ignore_case;
+          this.global.active = settings.global;
+          this.dot_all.active = settings.dot_all;
+        	this.style_chooser.active_id = settings.regex_style;
         }
 
         private void save_settings () {
@@ -348,6 +412,9 @@ namespace RegexTester {
 
             settings.sidebar_visible = this.sidebar.visible;
             settings.multiline = this.multiline.active;
+            settings.ignore_case = this.ignore_case.active;
+            settings.global = this.global.active;
+            settings.dot_all = this.dot_all.active;
             settings.regex_style = this.style_chooser.active_id;
         }
     }
