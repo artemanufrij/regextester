@@ -50,10 +50,6 @@ namespace RegexTester {
             settings = Settings.get_default ();
             load_window_settings ();
 
-            settings.changed.connect ((_) => {
-              load_window_settings();
-              load_other_settings();
-            });
             this.match.connect (
                 (count, group_items) => {
                     if (group_items.length () == 0) {
