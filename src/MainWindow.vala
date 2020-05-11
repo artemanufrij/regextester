@@ -247,6 +247,9 @@ namespace RegexTester {
                     var buffer = result.buffer;
                     var text = buffer.text;
 
+                    settings.text = text;
+                    settings.regex = regex;
+
                     foreach (var child in matches.get_children ()) {
                         matches.remove (child);
                     }
@@ -396,7 +399,9 @@ namespace RegexTester {
         	this.ignore_case.active = settings.ignore_case;
           this.global.active = settings.global;
           this.dot_all.active = settings.dot_all;
-        	this.style_chooser.active_id = settings.regex_style;
+          this.style_chooser.active_id = settings.regex_style;
+          this.entry.text = settings.regex;
+          this.result.buffer.text = settings.text;
         }
 
         private void save_settings () {

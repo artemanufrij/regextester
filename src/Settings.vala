@@ -35,6 +35,8 @@ namespace RegexTester {
 
             return settings;
         }
+        public string regex { get; set; }
+        public string text { get; set; }
         public int window_width { get; set; }
         public int window_height { get; set; }
         public int window_x { get; set; }
