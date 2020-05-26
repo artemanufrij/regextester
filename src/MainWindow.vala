@@ -52,17 +52,17 @@ namespace RegexTester {
 
             this.match.connect (
                 (count, group_items) => {
-                    if (group_items.length () == 0) {
-                        return;
-                    }
-                    this.matches.add (new Widgets.MatchItem (count, group_items));
-                    this.matches.show_all ();
-                });
+                if (group_items.length () == 0) {
+                    return;
+                }
+                this.matches.add (new Widgets.MatchItem (count, group_items));
+                this.matches.show_all ();
+            });
             this.delete_event.connect (
                 () => {
-                    save_settings ();
-                    return false;
-                });
+                save_settings ();
+                return false;
+            });
             build_ui ();
         }
 
@@ -75,8 +75,8 @@ namespace RegexTester {
             var show_sidebar = new Gtk.Button.from_icon_name ("pane-show-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
             show_sidebar.clicked.connect (
                 () => {
-                    sidebar.visible = !sidebar.visible;
-                });
+                sidebar.visible = !sidebar.visible;
+            });
             headerbar.pack_end (show_sidebar);
             this.set_titlebar (headerbar);
 
@@ -112,13 +112,13 @@ namespace RegexTester {
             result.top_margin = result.left_margin = result.bottom_margin = result.right_margin = 12;
             result.wrap_mode = Gtk.WrapMode.WORD;
 
-            result.buffer.create_tag ("marked_first", "background", "#8cd5ff");
-            result.buffer.create_tag ("marked_second", "background", "#d1ff82");
-            result.buffer.create_tag ("marked_sub_0", "background", "#abacae");
-            result.buffer.create_tag ("marked_sub_1", "background", "#ff8c82");
-            result.buffer.create_tag ("marked_sub_2", "background", "#f9c440");
-            result.buffer.create_tag ("marked_sub_3", "background", "#95a3ab");
-            result.buffer.create_tag ("marked_sub_4", "background", "#e29ffc");
+            result.buffer.create_tag ("marked_first",     "background", "#8cd5ff");
+            result.buffer.create_tag ("marked_second",    "background", "#d1ff82");
+            result.buffer.create_tag ("marked_sub_0",     "background", "#abacae");
+            result.buffer.create_tag ("marked_sub_1",     "background", "#ff8c82");
+            result.buffer.create_tag ("marked_sub_2",     "background", "#f9c440");
+            result.buffer.create_tag ("marked_sub_3",     "background", "#95a3ab");
+            result.buffer.create_tag ("marked_sub_4",     "background", "#e29ffc");
             result.buffer.create_tag ("marked_highlight", "background", "#ffa154");
             result.buffer.changed.connect (check_regex);
 
@@ -132,14 +132,14 @@ namespace RegexTester {
             sidebar.width_request = 120;
             sidebar.notify["visible"].connect (
                 () => {
-                    if (sidebar.visible) {
-                        show_sidebar.image = new Gtk.Image.from_icon_name ("pane-hide-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-                        show_sidebar.tooltip_text = _ ("Hide Sidebar");
-                    } else {
-                        show_sidebar.image = new Gtk.Image.from_icon_name ("pane-show-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-                        show_sidebar.tooltip_text = _ ("Show Sidebar");
-                    }
-                });
+                if (sidebar.visible) {
+                    show_sidebar.image = new Gtk.Image.from_icon_name ("pane-hide-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+                    show_sidebar.tooltip_text = _ ("Hide Sidebar");
+                } else {
+                    show_sidebar.image = new Gtk.Image.from_icon_name ("pane-show-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+                    show_sidebar.tooltip_text = _ ("Show Sidebar");
+                }
+            });
 
             var options = new Gtk.Grid ();
             options.margin = 12;
@@ -193,7 +193,7 @@ namespace RegexTester {
 
             style_chooser = new Gtk.ComboBoxText ();
             style_chooser.append ("Javascript", "Javascript");
-            style_chooser.append ("Perl", "Perl");
+            style_chooser.append ("Perl",             "Perl");
             style_chooser.active_id = settings.regex_style;
             style_chooser.tooltip_text = _ ("Choose a Regex Style");
             style_chooser.changed.connect (check_regex);
@@ -215,11 +215,11 @@ namespace RegexTester {
             matches.expand = true;
             matches.selected_rows_changed.connect (
                 () => {
-                    var item = this.matches.get_selected_row () as Widgets.MatchItem;
-                    if (item != null) {
-                        this.set_selected_match (item.start, item.end);
-                    }
-                });
+                var item = this.matches.get_selected_row () as Widgets.MatchItem;
+                if (item != null) {
+                    this.set_selected_match (item.start, item.end);
+                }
+            });
             scroller.add (matches);
             sidebar.attach (scroller, 0, 4, 2, 1);
 
@@ -230,7 +230,7 @@ namespace RegexTester {
             this.show_all ();
 
             entry.grab_focus ();
-            load_other_settings();
+            load_other_settings ();
         }
 
         private void check_regex () {
@@ -241,104 +241,104 @@ namespace RegexTester {
             typing_timer = GLib.Timeout.add (
                 300,
                 () => {
-                    var regex = this.entry.text;
-                    entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, null);
+                var regex = this.entry.text;
+                entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, null);
 
-                    var buffer = result.buffer;
-                    var text = buffer.text;
+                var buffer = result.buffer;
+                var text = buffer.text;
 
-                    settings.text = text;
-                    settings.regex = regex;
+                settings.text = text;
+                settings.regex = regex;
 
-                    foreach (var child in matches.get_children ()) {
-                        matches.remove (child);
-                    }
+                foreach (var child in matches.get_children ()) {
+                    matches.remove (child);
+                }
 
-                    Gtk.TextIter s, e;
-                    buffer.get_bounds (out s, out e);
+                Gtk.TextIter s, e;
+                buffer.get_bounds (out s, out e);
 
-                    reset_tags (buffer);
+                reset_tags (buffer);
 
-                    if (regex == "") {
-                        typing_timer = 0;
-                        return false;
-                    }
-
-                    try {
-                        RegexCompileFlags flags = RegexCompileFlags.OPTIMIZE;
-
-                        if (multiline.active) {
-                            flags |= RegexCompileFlags.MULTILINE;
-                        }
-
-                        if (ignore_case.active) {
-                        	flags |= RegexCompileFlags.CASELESS;
-                        }
-
-                        if (!global.active) {
-                        	flags |= RegexCompileFlags.ANCHORED;
-                        }
-
-                        if (dot_all.active) {
-                        	flags |= RegexCompileFlags.DOTALL;
-                        }
-
-                        if (style_chooser.active_id == "Javascript") {
-                            flags |= RegexCompileFlags.JAVASCRIPT_COMPAT;
-                        }
-
-                        var reg = new Regex (regex, flags);
-                        MatchInfo mi;
-
-                        if (reg.match (text, 0, out mi)) {
-                            bool mod = true;
-                            int count = 1;
-
-                            int pos_start = 0;
-                            int pos_end = 0;
-                            do {
-                                GLib.List<RegexTester.GroupItem> group_items = new GLib.List<RegexTester.GroupItem> ();
-
-                                for (int i = 0; i < mi.get_match_count (); i++) {
-                                    mi.fetch_pos (i, out pos_start, out pos_end);
-                                    if (pos_start == pos_end) {
-                                        continue;
-                                    }
-
-                                    int offset_start = pos_start - shift_unichar (text, pos_start);
-                                    int offset_end = pos_end - shift_unichar (text, pos_end);
-
-                                    s.set_offset (offset_start);
-                                    e.set_offset (offset_end);
-
-                                    if (i == 0) {
-                                        if (mod) {
-                                            buffer.apply_tag_by_name ("marked_first", s, e);
-                                        } else {
-                                            buffer.apply_tag_by_name ("marked_second", s, e);
-                                        }
-                                        mod = !mod;
-                                    } else {
-                                        var sub_mod = "marked_sub_" + (i % 5).to_string ();
-                                        buffer.apply_tag_by_name (sub_mod, s, e);
-                                    }
-                                    string str = mi.fetch (i);
-
-                                    var new_group_item = new RegexTester.GroupItem (str, offset_start, offset_end);
-                                    group_items.append (new_group_item);
-                                }
-                                match (count, group_items);
-                                count++;
-                            } while (mi.next ());
-                        }
-                    } catch (Error e) {
-                        warning (e.message);
-                        entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "process-error");
-                        entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, e.message);
-                    }
+                if (regex == "") {
                     typing_timer = 0;
                     return false;
-                });
+                }
+
+                try {
+                    RegexCompileFlags flags = RegexCompileFlags.OPTIMIZE;
+
+                    if (multiline.active) {
+                        flags |= RegexCompileFlags.MULTILINE;
+                    }
+
+                    if (ignore_case.active) {
+                        flags |= RegexCompileFlags.CASELESS;
+                    }
+
+                    if (!global.active) {
+                        flags |= RegexCompileFlags.ANCHORED;
+                    }
+
+                    if (dot_all.active) {
+                        flags |= RegexCompileFlags.DOTALL;
+                    }
+
+                    if (style_chooser.active_id == "Javascript") {
+                        flags |= RegexCompileFlags.JAVASCRIPT_COMPAT;
+                    }
+
+                    var reg = new Regex (regex, flags);
+                    MatchInfo mi;
+
+                    if (reg.match (text, 0, out mi)) {
+                        bool mod = true;
+                        int count = 1;
+
+                        int pos_start = 0;
+                        int pos_end = 0;
+                        do {
+                            GLib.List<RegexTester.GroupItem> group_items = new GLib.List<RegexTester.GroupItem> ();
+
+                            for (int i = 0; i < mi.get_match_count (); i++) {
+                                mi.fetch_pos (i, out pos_start, out pos_end);
+                                if (pos_start == pos_end) {
+                                    continue;
+                                }
+
+                                int offset_start = pos_start - shift_unichar (text, pos_start);
+                                int offset_end = pos_end - shift_unichar (text, pos_end);
+
+                                s.set_offset (offset_start);
+                                e.set_offset (offset_end);
+
+                                if (i == 0) {
+                                    if (mod) {
+                                        buffer.apply_tag_by_name ("marked_first", s, e);
+                                    } else {
+                                        buffer.apply_tag_by_name ("marked_second", s, e);
+                                    }
+                                    mod = !mod;
+                                } else {
+                                    var sub_mod = "marked_sub_" + (i % 5).to_string ();
+                                    buffer.apply_tag_by_name (sub_mod, s, e);
+                                }
+                                string str = mi.fetch (i);
+
+                                var new_group_item = new RegexTester.GroupItem (str, offset_start, offset_end);
+                                group_items.append (new_group_item);
+                            }
+                            match (count, group_items);
+                            count++;
+                        } while (mi.next ());
+                    }
+                } catch (Error e) {
+                    warning (e.message);
+                    entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "process-error");
+                    entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, e.message);
+                }
+                typing_timer = 0;
+                return false;
+            });
         }
 
         private void set_selected_match (int start, int end) {
@@ -394,14 +394,14 @@ namespace RegexTester {
 
 
         private void load_other_settings () {
-        	this.sidebar.visible = settings.sidebar_visible;
-        	this.multiline.active = settings.multiline;
-        	this.ignore_case.active = settings.ignore_case;
-          this.global.active = settings.global;
-          this.dot_all.active = settings.dot_all;
-          this.style_chooser.active_id = settings.regex_style;
-          this.entry.text = settings.regex;
-          this.result.buffer.text = settings.text;
+            this.sidebar.visible = settings.sidebar_visible;
+            this.multiline.active = settings.multiline;
+            this.ignore_case.active = settings.ignore_case;
+            this.global.active = settings.global;
+            this.dot_all.active = settings.dot_all;
+            this.style_chooser.active_id = settings.regex_style;
+            this.entry.text = settings.regex;
+            this.result.buffer.text = settings.text;
         }
 
         private void save_settings () {

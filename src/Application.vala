@@ -26,9 +26,7 @@
  */
 
 namespace RegexTester {
-
     public class RegexTesterApp : Gtk.Application {
-
         static RegexTesterApp _instance = null;
 
         public static RegexTesterApp instance {
@@ -46,10 +44,10 @@ namespace RegexTester {
             set_accels_for_action ("app.quit", accel_quit);
             action_quit.activate.connect (
                 () => {
-                    if (mainwindow != null) {
-                        mainwindow.destroy ();
-                    }
-                });
+                if (mainwindow != null) {
+                    mainwindow.destroy ();
+                }
+            });
         }
 
         Gtk.Window mainwindow;
@@ -61,7 +59,7 @@ namespace RegexTester {
             }
 
             mainwindow = new MainWindow ();
-            mainwindow.set_application(this);
+            mainwindow.set_application (this);
         }
     }
 }
