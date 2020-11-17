@@ -120,8 +120,7 @@ namespace RegexTester {
 
             sidebar = new Gtk.Grid ();
             sidebar.width_request = 120;
-            sidebar.notify["visible"].connect (
-                () => {
+            sidebar.notify["visible"].connect (() => {
                     if (sidebar.visible) {
                         show_sidebar.image = new Gtk.Image.from_icon_name ("pane-hide-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
                         show_sidebar.tooltip_text = _ ("Hide Sidebar");
@@ -173,8 +172,7 @@ namespace RegexTester {
 
             matches = new Gtk.ListBox ();
             matches.expand = true;
-            matches.selected_rows_changed.connect (
-                () => {
+            matches.selected_rows_changed.connect (() => {
                     var item = this.matches.get_selected_row () as Widgets.MatchItem;
                     if (item != null) {
                         this.set_selected_match (item.start, item.end);
@@ -199,8 +197,7 @@ namespace RegexTester {
             }
 
             typing_timer = GLib.Timeout.add (
-                300,
-                () => {
+                300, () => {
                     var regex = this.entry.text;
                     entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, null);
 
