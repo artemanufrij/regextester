@@ -27,7 +27,6 @@
 
 namespace RegexTester {
     public class Settings : Granite.Services.Settings {
-
         private static Settings settings;
         public static Settings get_default () {
             if (settings == null)
@@ -35,11 +34,16 @@ namespace RegexTester {
 
             return settings;
         }
+        public string regex { get; set; }
+        public string text { get; set; }
         public int window_width { get; set; }
         public int window_height { get; set; }
         public int window_x { get; set; }
         public int window_y { get; set; }
         public bool multiline { get; set; }
+        public bool ignore_case { get; set; }
+        public bool global { get; set; }
+        public bool dot_all { get; set; }
         public bool sidebar_visible { get; set; }
         public string regex_style { get; set; }
 

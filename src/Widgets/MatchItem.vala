@@ -27,7 +27,6 @@
 
 namespace RegexTester.Widgets {
     public class MatchItem : Gtk.ListBoxRow {
-
         public int start { get; set; }
         public int end { get; set; }
 
@@ -38,18 +37,17 @@ namespace RegexTester.Widgets {
             content.margin = 6;
             content.row_spacing = 6;
 
-            var match_count = new Gtk.Label (_("Match %d").printf (count));
+            var match_count = new Gtk.Label (_ ("Match %d").printf (count));
             match_count.hexpand = true;
             match_count.halign = Gtk.Align.START;
 
             var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             int group_counter = 0;
             foreach (var item in group_items) {
-
                 var row = new Gtk.Grid ();
                 row.column_spacing = 4;
                 var menu = new Gtk.Menu ();
-                var menu_copy = new Gtk.MenuItem.with_label (_("Copy match…"));
+                var menu_copy = new Gtk.MenuItem.with_label (_ ("Copy match…"));
                 menu_copy.activate.connect (() => {
                     Gtk.Clipboard.get_default (Gdk.Display.get_default ()).set_text (item.text, -1);
                 });
@@ -59,7 +57,7 @@ namespace RegexTester.Widgets {
                 if (item == group_items.first ().data) {
                     match_text.label = "<b>%s</b>".printf (item.text);
                 } else {
-                    match_text.label = _("<small>Group %d:</small> %s").printf (group_counter, item.text);
+                    match_text.label = _ ("<small>Group %d:</small> %s").printf (group_counter, item.text);
                 }
                 match_text.tooltip_text = item.text;
                 match_text.ellipsize = Pango.EllipsizeMode.MIDDLE;
@@ -84,26 +82,25 @@ namespace RegexTester.Widgets {
                 menu.show_all ();
 
                 row.attach (event_box, 0, 0);
-                row.attach (pos, 1, 0);
+                row.attach (pos,       1, 0);
                 box.pack_start (row, true, true, 0);
 
-                group_counter ++;
+                group_counter++;
             }
 
             string pkgdir = "/usr/share/" + GLib.Environment.get_application_name ();
 
             Gtk.Image icon;
             if (count % 2 == 0) {
-                icon = new Gtk.Image.from_file(pkgdir + "/icons/regex-match-second.svg");
+                icon = new Gtk.Image.from_file (pkgdir + "/icons/regex-match-second.svg");
             } else {
-                icon = new Gtk.Image.from_file(pkgdir + "/icons/regex-match-first.svg");
+                icon = new Gtk.Image.from_file (pkgdir + "/icons/regex-match-first.svg");
             }
 
-            content.attach (icon, 0, 0);
+            content.attach (icon,        0, 0);
             content.attach (match_count, 1, 0);
-            content.attach (box, 0, 1, 2, 1);
+            content.attach (box,         0, 1, 2, 1);
             this.add (content);
         }
-
     }
 }

@@ -26,9 +26,7 @@
  */
 
 namespace RegexTester {
-
     public class RegexTesterApp : Gtk.Application {
-
         static RegexTesterApp _instance = null;
 
         public static RegexTesterApp instance {
@@ -48,7 +46,7 @@ namespace RegexTester {
             }
 
             mainwindow = new MainWindow ();
-            mainwindow.set_application(this);
+            mainwindow.set_application (this);
         }
     }
 }
