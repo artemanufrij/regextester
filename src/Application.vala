@@ -36,20 +36,7 @@ namespace RegexTester {
                 return _instance;
             }
         }
-
-        construct {
-            var action_quit = new SimpleAction ("quit", null);
-            add_action (action_quit);
-            string[] accel_quit = {"<Control>q"};
-            set_accels_for_action ("app.quit", accel_quit);
-            action_quit.activate.connect (
-                () => {
-                if (mainwindow != null) {
-                    mainwindow.destroy ();
-                }
-            });
-        }
-
+        
         Gtk.Window mainwindow;
 
         protected override void activate () {

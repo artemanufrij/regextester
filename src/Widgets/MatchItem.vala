@@ -67,7 +67,7 @@ namespace RegexTester.Widgets {
                 var event_box = new Gtk.EventBox ();
                 event_box.button_press_event.connect ((sender, evt) => {
                     if (evt.type == Gdk.EventType.BUTTON_PRESS && evt.button == 3) {
-                        menu.popup_at_pointer (evt);
+                        menu.popup_at_pointer();
                         return true;
                     }
                     return false;

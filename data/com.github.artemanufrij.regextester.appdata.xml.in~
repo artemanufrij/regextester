@@ -30,15 +30,6 @@
         </screenshot>
     </screenshots>
     <releases>
-        <release version="1.1.1" date="2021-03-24">
-            <description>
-                <p>Fixed:</p>
-                <ul>
-                    <li>Crash when press '0'</li>
-                    <li>Some improvements by Nathan Bonnemains</li>
-                </ul>
-            </description>
-        </release>
         <release version="1.1.0" date="2019-07-17">
             <description>
                 <p>New:</p>
